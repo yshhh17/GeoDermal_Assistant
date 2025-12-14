@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from ...schemas.inputs import AnalyzeRequest
 from typing import Dict, Any
+from ...services.geocode import geocode_place
 
 router = APIRouter()
 
@@ -10,7 +11,15 @@ async def analyze(payload: AnalyzeRequest) -> Dict[str, Any]:
     Day 1 analyze stub returning mock env_report, risks, recommendations, and explanations.
     This is a safe placeholder to let frontend and later backend pieces integrate.
     """
+
+    geocode_result = await geocode_place(payload.destination)
+    if geocode_result:
+        coords = {"lat": geocode_result["lat"], "lon": geocode_result["lon"], "display_name": geocode_result["display_name"]}
+    else:
+        coords = {"lat": None, "lon": None, "display_name": None}
+
     env_report = {
+        "coords": coords,
         "aqi": 120,
         "pm25": 65,
         "humidity": 40,

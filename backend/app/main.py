@@ -3,13 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 from .api.endpoints.analyze import router as analyze_router
+from .config import settings
 
 load_dotenv()
-
-class Settings(BaseSettings):
-    APP_NAME: str = "GeoDermal-Backend"
-
-settings = Settings()
 
 app = FastAPI(title=settings.APP_NAME)
 
