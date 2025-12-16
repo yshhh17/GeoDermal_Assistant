@@ -3,7 +3,7 @@ from pydantic import AnyUrl
 
 class Settings(BaseSettings):
     APP_NAME: str = "GEODermal - Backend"
-    OWM_API_KEY: str | None = None
+    WA_API_KEY: str | None = None
     AQI_API_KEY: str | None = None
     GEOCODE_BASE_URL: AnyUrl = "https://nominatim.openstreetmap.org"
     # general httpx timeout seconds
