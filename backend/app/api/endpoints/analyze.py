@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from ...schemas.inputs import AnalyzeRequest
 from typing import Dict, Any
 from ...services.geocode import geocode_place
+from ...services.clients import open_meteo, openaq
 
 router = APIRouter()
 
@@ -14,19 +15,42 @@ async def analyze(payload: AnalyzeRequest) -> Dict[str, Any]:
 
     geocode_result = await geocode_place(payload.destination)
     if geocode_result:
-        coords = {"lat": geocode_result["lat"], "lon": geocode_result["lon"], "display_name": geocode_result["display_name"]}
+        lat = geocode_result["lat"]
+        lon = geocode_result["lon"]
+        coords = {"lat": lat, "lon": lon, "display_name": geocode_result["display_name"]}
     else:
-        coords = {"lat": None, "lon": None, "display_name": None}
+        lat = lon = None
+        coords = {"lat": lat, "lon": lon, "display_name": geocode_result["location not found"]}
 
     env_report = {
-        "coords": coords,
-        "aqi": 120,
-        "pm25": 65,
-        "humidity": 40,
-        "temperature_c": 30,
-        "uv_index": 7,
-        "water_hardness_estimated_ppm": 180
+        "coords": coords
     }
+
+    # fetch weather + UV
+    if lat is not None and lon is not None:
+        weather = await open_meteo.fetch_weather_and_uv(lat, lon)
+        if weather:
+            env_report.update({
+                "temperature_c": weather.get("temperature_c"),
+                "humidity": weather.get("humidity"),
+                "uv_index": weather.get("uv_index"),
+                "raw_weather": weather.get("raw")
+            })
+        else:
+            env_report.update({"note_weather": "unavailable"})
+
+        # fetch nearby AQ measurements
+        aqi = await openaq.fetch_aqi_nearby(lat, lon)
+        if aqi:
+            env_report.update({
+                "aqi": aqi.get("aqi"),
+                "pm2_5": aqi.get("pm25"),
+                "pm10": aqi.get("pm10")
+            })
+        else:
+            env_report.update({"note_aqi": "unavailable"})
+    else:
+        env_report.update({"note": "coords missing; cannot fetch external data"})
 
     if payload.concern == "skin":
         risks = {

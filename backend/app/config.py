@@ -3,8 +3,8 @@ from pydantic import AnyUrl
 
 class Settings(BaseSettings):
     APP_NAME: str = "GEODermal - Backend"
-    WA_API_KEY: str | None = None
-    AQI_API_KEY: str | None = None
+    OPEN_METEO_BASE: AnyUrl = "https://api.open-meteo.com/v1"
+    OPENAQ_BASE: AnyUrl = "https://air-quality-api.open-meteo.com/v1"
     GEOCODE_BASE_URL: AnyUrl = "https://nominatim.openstreetmap.org"
     # general httpx timeout seconds
     HTTP_TIMEOUT: int = 10
