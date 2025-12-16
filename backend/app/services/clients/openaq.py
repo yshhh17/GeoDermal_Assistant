@@ -4,6 +4,7 @@ from ...config import settings
 import asyncio
 import logging
 
+logger = logging.getLogger(__name__)
 BASE = str(settings.OPENAQ_BASE).rstrip("/")
 
 async def _get_with_retries(client: httpx.AsyncClient, url: str, params: Dict[str, Any], retries: int = 2, delay: float = 0.5):
@@ -49,17 +50,15 @@ async def fetch_aqi_nearby(lat: float, lon: float) -> Optional[Dict[str, Any]]:
             logger.info(f"AQI API raw response for ({lat}, {lon}): {data}")
             
             current = data.get("current", {})
-            
+
             result = {
-                "aqi":  current.get("us_aqi"),
-                "pm25": current.get("pm2_5"),
-                "pm10": current.get("pm10"),
-                "no2": None,  # Not requested in this API call
-                "o3": None    # Not requested in this API call
+                "us_aqi": current.get("us_aqi"),
+                "pm2_5": current.get("pm2_5"),
+                "pm10": current.get("pm10")
             }
-            
             logger.info(f"Normalized AQI data: {result}")
             return result
             
         except Exception as e:
+            logger.error(f"Error fetching AQI for ({lat}, {lon}): {e}")
             return None

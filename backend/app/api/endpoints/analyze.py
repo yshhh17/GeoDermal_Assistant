@@ -43,8 +43,8 @@ async def analyze(payload: AnalyzeRequest) -> Dict[str, Any]:
         aqi = await openaq.fetch_aqi_nearby(lat, lon)
         if aqi:
             env_report.update({
-                "aqi": aqi.get("aqi"),
-                "pm2_5": aqi.get("pm25"),
+                "aqi": aqi.get("us_aqi"),
+                "pm25": aqi.get("pm2_5"),
                 "pm10": aqi.get("pm10")
             })
         else:
