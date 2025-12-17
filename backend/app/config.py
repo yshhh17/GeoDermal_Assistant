@@ -8,7 +8,8 @@ class Settings(BaseSettings):
     GEOCODE_BASE_URL: AnyUrl = "https://nominatim.openstreetmap.org"
     # general httpx timeout seconds
     HTTP_TIMEOUT: int = 10
-
+    DATABASE_URL: str
+    SOURCE_VERSION: str
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

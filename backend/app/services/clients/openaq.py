@@ -30,15 +30,13 @@ async def fetch_aqi_nearby(lat: float, lon: float) -> Optional[Dict[str, Any]]:
     {
       "aqi": int | None,
       "pm25":  float | None,
-      "pm10": float | None,
-      "no2": float | None,
-      "o3": float | None
+      "pm10": float | None
     }
     """
     params = {
         "latitude": lat,
         "longitude": lon,
-        "current": "us_aqi,pm2_5,pm10"  # Exact params from working URL
+        "current": "us_aqi,pm2_5,pm10,nitrogen_dioxide,ozone"  # Exact params from working URL
     }
     url = f"{BASE}/air-quality"
     timeout = settings.HTTP_TIMEOUT
@@ -54,7 +52,9 @@ async def fetch_aqi_nearby(lat: float, lon: float) -> Optional[Dict[str, Any]]:
             result = {
                 "us_aqi": current.get("us_aqi"),
                 "pm2_5": current.get("pm2_5"),
-                "pm10": current.get("pm10")
+                "pm10": current.get("pm10"),
+                "nitrogen_dioxide": current.get("nitrogen_dioxide"),
+                "ozone": current.get("ozone")
             }
             logger.info(f"Normalized AQI data: {result}")
             return result
