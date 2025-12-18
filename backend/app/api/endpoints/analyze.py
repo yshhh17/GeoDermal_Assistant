@@ -58,8 +58,8 @@ async def analyze(payload: AnalyzeRequest, db: Session = Depends(get_db)) -> Dic
                 "aqi": aqi_data.get("us_aqi"),
                 "pm25": aqi_data.get("pm2_5"),
                 "pm10": aqi_data.get("pm10"),
-                "NO2": aqi_data.get("no2"),
-                "O3": aqi_data.get("o3")
+                "NO2": aqi_data.get("nitrogen_dioxide"),
+                "O3": aqi_data.get("ozone")
             })
         
         # Step 4: Calculate AQI from PM2.5 if API didn't provide it
@@ -133,7 +133,7 @@ async def analyze(payload: AnalyzeRequest, db: Session = Depends(get_db)) -> Dic
             confidence=confidence
         )
         
-        db. add(report)
+        db.add(report)
         db.commit()
         db.refresh(report)
         

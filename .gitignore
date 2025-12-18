@@ -1,22 +1,60 @@
 # Python
 __pycache__/
 *.py[cod]
-*.env
-.venv/
-venv/
-.env
-*.pyc
-
-# Node
-node_modules/
-
-# Build
+*$py.class
+*.so
+. Python
+*. egg-info/
 dist/
 build/
+*.egg
 
-# Editor
+# Virtual Environment
+backend/.venv/
+backend/venv/
+.venv/
+venv/
+ENV/
+env/
+
+# Environment variables (CRITICAL - never commit!)
+backend/.env
+. env
+*. env
+! .env. example
+
+# IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+. DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Data files (optional - depends on size)
+data/raw/*. csv
+data/processed/*.parquet
+data/models/*.pkl
+
+# Jupyter
+.ipynb_checkpoints/
+*. ipynb_checkpoints
 
 # OS
 .DS_Store
+Thumbs.db

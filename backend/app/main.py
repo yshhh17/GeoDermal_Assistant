@@ -4,10 +4,15 @@ from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 from .api.endpoints.analyze import router as analyze_router
 from .config import settings
+from .db.base import Base
+from .db.session import engine, get_db
+from sqlalchemy.orm import Session
 
 load_dotenv()
 
 app = FastAPI(title=settings.APP_NAME)
+
+Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
