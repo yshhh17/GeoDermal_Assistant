@@ -10,6 +10,7 @@ from ... db.session import get_db
 from ...models.report import Report
 from ...config import settings
 import logging
+from ...services.clients.water_quality import lookup_water_quality
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -48,7 +49,7 @@ async def analyze(payload: AnalyzeRequest, db: Session = Depends(get_db)) -> Dic
             env_report. update({
                 "temperature_c": weather.get("temperature_c"),
                 "humidity":  weather.get("humidity"),
-                "uv_index": weather. get("uv_index")
+                "uv_index": weather.get("uv_index")
             })
 
         # Step 3: Fetch nearby AQ measurements
@@ -67,6 +68,30 @@ async def analyze(payload: AnalyzeRequest, db: Session = Depends(get_db)) -> Dic
             calculated_aqi = calculate_aqi_from_pm25(env_report["pm25"])
             if calculated_aqi: 
                 env_report["aqi"] = calculated_aqi
+
+        # Step 4.5: Lookup water quality data
+    water_quality = None
+    if lat is not None and lon is not None:
+        water_quality = lookup_water_quality(
+            city=payload.destination,
+            lat=lat,
+            lon=lon,
+            max_distance_km=100.0
+        )
+        
+        if water_quality: 
+            env_report.update({
+                "water_hardness":  water_quality.get("hardness_mg_l"),
+                "water_ph": water_quality.get("ph"),
+                "water_tds": water_quality.get("tds_mg_l"),
+                "water_chlorine": water_quality.get("chlorine_mg_l"),
+                "water_source":  water_quality.get("source_type"),
+                "water_match_type": water_quality.get("match_type"),
+                "water_distance_km": water_quality.get("distance_km")
+            })
+            logger.info(f"Water quality data:  {water_quality.get('match_type')} match for {payload.destination}")
+        else:
+            logger.warning(f"No water quality data found for {payload.destination}")
 
     # Step 5: Validate and clean environmental data
     env_report = validate_env_data(env_report)
@@ -127,6 +152,10 @@ async def analyze(payload: AnalyzeRequest, db: Session = Depends(get_db)) -> Dic
             no2=env_report.get("NO2"),
             o3=env_report. get("O3"),
             aqi=env_report.get("aqi"),
+            water_hardness=env_report.get("water_hardness"),
+            water_ph=env_report.get("water_ph"),
+            water_tds=env_report.get("water_tds"),
+            water_chlorine=env_report. get("water_chlorine"),
             risks=risks,
             is_mock_data=is_mock_data,
             missing_fields=missing_fields if missing_fields else None,

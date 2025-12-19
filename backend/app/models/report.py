@@ -41,6 +41,7 @@ class Report(Base):
     water_hardness = Column(Integer, nullable=True)
     water_ph = Column(Float, nullable=True)
     water_tds = Column(Integer, nullable=True)
+    water_chlorine = Column(Float, nullable=True)
     
     # Risk labels (heuristic outputs for training)
     risks = Column(JSONB, nullable=False)

@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 from pydantic import AnyUrl
+from pathlib import Path
 
 class Settings(BaseSettings):
     APP_NAME: str = "GEODermal - Backend"
@@ -11,7 +12,9 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     SOURCE_VERSION: str
     class Config:
-        env_file = ".env"
+        # Try multiple locations for .env file
+        env_file = str(Path(__file__).parent.parent / ".env")
         env_file_encoding = "utf-8"
+        extra = "allow"
 
 settings = Settings()
