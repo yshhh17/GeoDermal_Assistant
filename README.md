@@ -197,16 +197,16 @@ GeoDermal_Assistant/
 │   │   ├── config.py         # Application configuration
 │   │   └── main.py           # FastAPI app entry point
 │   ├── requirements.txt      # Python dependencies
-│   └── alembic.ini          # Alembic configuration
+│   ├── alembic.ini          # Alembic configuration
+│   └── .env.example         # Environment variables template
 ├── data/                     # Data files (water quality dataset)
-├── .env.example             # Environment variables template
 ├── .gitignore               # Git ignore rules
 └── README.md                # This file
 ```
 
 ## Environment Variables
 
-See `.env.example` for a complete list of required environment variables:
+See `backend/.env.example` for a complete list of required environment variables:
 
 - `DATABASE_URL`: PostgreSQL connection string
 - `GROQ_API_KEY`: API key from Groq (free tier available)
