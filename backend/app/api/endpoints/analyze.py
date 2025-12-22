@@ -11,9 +11,13 @@ from ...models.report import Report
 from ...config import settings
 import logging
 from ...services.clients.water_quality import lookup_water_quality
+from ...services.llm_service import analyze_with_llm
 
 logger = logging.getLogger(__name__)
-router = APIRouter()
+router = APIRouter(
+    prefix="/api",
+    tags=["analysis"]
+)
 
 @router.post("/analyze")
 async def analyze(payload: AnalyzeRequest, db: Session = Depends(get_db)) -> Dict[str, Any]: 
@@ -99,36 +103,38 @@ async def analyze(payload: AnalyzeRequest, db: Session = Depends(get_db)) -> Dic
     # Step 6: Check data quality
     is_mock_data, missing_fields, confidence = check_data_quality(env_report)
 
-    # Step 7: Generate heuristic risks & recommendations (temporary bootstrap labels)
-    if payload.concern == "skin":
-        risks = {
-            "dryness": 7,
-            "acne": 3,
-            "irritation": 4,
-            "uv_damage": 6,
-            "pigmentation": 3
-        }
-        recommendations = [
-            "Use a hydrating moisturizer and carry a travel-sized bottle.",
-            "Apply broad-spectrum sunscreen SPF 50 when outdoors.",
-            "Avoid harsh exfoliants during travel."
-        ]
-    else: 
-        risks = {
-            "hairfall": 4,
-            "dandruff": 5
-        }
-        recommendations = [
-            "Use a gentle sulfate-free shampoo while traveling.",
-            "Rinse hair with soft water where possible; use leave-in conditioner."
-        ]
-
-    explanations = {
-        "why": [
-            f"AQI of {env_report. get('aqi', 'N/A')} and humidity of {env_report.get('humidity', 'N/A')}% affect skin conditions.",
-            f"UV index is {env_report.get('uv_index', 'N/A')}; sun protection recommended."
-        ]
-    }
+    # Step 7: Analyze with Groq LLM
+    try:
+        logger.info("Starting LLM-based risk analysis...")
+        
+        llm_result = analyze_with_llm(
+            env_data=env_report,
+            user_profile={
+                'concern': payload.concern,
+                'skin_type':  payload.skin_type,
+                'hair_type': payload.hair_type,
+                'duration_category': payload.duration_category
+            }
+        )
+        
+        risks = llm_result. get('risks', {})
+        recommendations = llm_result.get('recommendations', [])
+        explanations = llm_result.get('explanations', {
+            'why': [
+                f"Environmental analysis completed for {payload.destination}",
+                f"Risk assessment based on current conditions",
+                "Recommendations tailored to your profile"
+            ]
+        })
+        
+        logger.info(f"Risk analysis complete.  Risks: {risks}")
+        
+    except Exception as e:
+        logger.error(f"Risk analysis failed: {e}")
+        # If everything fails, return basic response
+        risks = {"error": "Unable to calculate risks"}
+        recommendations = ["Please try again later"]
+        explanations = {"why": ["Analysis service temporarily unavailable"]}
 
     # Step 8: Save to database
     try:

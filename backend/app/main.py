@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 from .api.endpoints.analyze import router as analyze_router
+from .api.endpoints.health import router as health_router
+from .api.endpoints.root import router as root_router
+from .api.endpoints.stats import router as stats_router
 from .config import settings
 from .db.base import Base
 from .db.session import engine, get_db
@@ -33,8 +36,15 @@ async def on_startup():
     load_water_quality_data()
     logger.info("application startup complete!!")
 
+@app.get("/")
+async def greeting():
+    return {"message": "hello there from server"}
+
 @app.get("/health")
 async def health():
     return {"status": "ok", "app": settings.APP_NAME}
 
-app.include_router(analyze_router, prefix="/api")
+app.include_router(analyze_router, prefix="/api", tags=["analysis"])
+app.include_router(root_router, prefix="/api", tags=["root"])
+app.include_router(stats_router, prefix="/api", tags=["statistics"])
+app.include_router(health_router, prefix="/api", tags=["server-health"])

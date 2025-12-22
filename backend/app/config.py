@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     OPEN_METEO_BASE: AnyUrl = "https://api.open-meteo.com/v1"
     OPENAQ_BASE: AnyUrl = "https://air-quality-api.open-meteo.com/v1"
     GEOCODE_BASE_URL: AnyUrl = "https://nominatim.openstreetmap.org"
+    GROQ_API_KEY: str
     # general httpx timeout seconds
     HTTP_TIMEOUT: int = 10
     DATABASE_URL: str
