@@ -7,7 +7,7 @@ AI-powered environmental analysis for travelers. Get personalized skin and hair 
 GeoDermal API analyzes environmental factors at your travel destination and provides:
 - **Risk Scores** (1-10 scale) for skin conditions like dryness, acne, UV damage, or hair concerns like hairfall and dandruff
 - **Personalized Recommendations** tailored to your skin/hair type and trip duration
-- **AI-Powered Analysis** using Groq LLM (Llama 3.1 70B) for intelligent risk assessment
+- **AI-Powered Analysis** using Groq LLM for intelligent risk assessment
 - **Real-time Data** from multiple environmental APIs
 
 Perfect for travelers who want to prepare their skincare/haircare routine before visiting a new destination.
@@ -16,7 +16,7 @@ Perfect for travelers who want to prepare their skincare/haircare routine before
 
 - **Backend Framework**: FastAPI + Python 3.9+
 - **Database**: PostgreSQL with SQLAlchemy ORM
-- **AI/LLM**: Groq API (Llama 3.1 70B model)
+- **AI/LLM**: Groq API (default model: openai/gpt-oss-20b, configurable)
 - **External APIs**:
   - Open-Meteo (weather & UV data)
   - OpenAQ (air quality data)
