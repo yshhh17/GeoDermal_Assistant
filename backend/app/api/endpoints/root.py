@@ -50,7 +50,7 @@ async def root():
             "deployment": "Render"
         },
         "contact": {
-            "github": "https://github.com/yshhh17/geodermal",
+            "github": "https://github.com/yshhh17/GeoDermal_Assistant",
             "author": "Yash Tiwari",
             "email": "yshhh173@gmail.com"
         },
