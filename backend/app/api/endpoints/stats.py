@@ -5,6 +5,10 @@ from datetime import datetime, timedelta
 import logging
 from app.db.session import get_db
 from app.models.report import Report
+from fastapi import Request, Response
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+from app.core.rate_limiter import limiter
 
 logger = logging.getLogger(__name__)
 
@@ -12,7 +16,8 @@ router = APIRouter()
 
 
 @router.get("/stats")
-async def get_statistics(db: Session = Depends(get_db)):
+@limiter.limit("30/hour")
+async def get_statistics(request: Request,response: Response,db: Session = Depends(get_db)):
     try:
         # Total analyses
         total_analyses = db.query(func.count(Report.id)).scalar() or 0

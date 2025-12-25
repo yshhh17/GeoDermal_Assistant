@@ -12,15 +12,19 @@ from ...config import settings
 import logging
 from ...services.clients.water_quality import lookup_water_quality
 from ...services.llm_service import analyze_with_llm
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+from fastapi import Request, Response
+from app.core.rate_limiter import limiter
 
 logger = logging.getLogger(__name__)
 router = APIRouter(
-    prefix="/api",
     tags=["analysis"]
 )
 
 @router.post("/analyze")
-async def analyze(payload: AnalyzeRequest, db: Session = Depends(get_db)) -> Dict[str, Any]: 
+@limiter.limit("10/hour")
+async def analyze(response: Response,request: Request,payload: AnalyzeRequest, db: Session = Depends(get_db)) -> Dict[str, Any]: 
     """
     Analyze destination and provide skin/hair care recommendations.
     Saves each analysis to database for model training.
