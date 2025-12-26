@@ -2,6 +2,13 @@
 
 AI-powered environmental analysis for travelers. Get personalized skin and hair care recommendations based on your destination's climate, air quality, and water conditions.
 
+## 📊 Current Status
+
+✅ **Backend MVP**: Complete and production-ready  
+🚧 **Frontend**: In development (React multi-page app)  
+⏳ **Authentication**: Planned for v2.0  
+⏳ **Deployment**: Ready to deploy  
+
 ## What It Does
 
 GeoDermal API analyzes environmental factors at your travel destination and provides:
@@ -17,6 +24,7 @@ Perfect for travelers who want to prepare their skincare/haircare routine before
 - **Backend Framework**: FastAPI + Python 3.9+
 - **Database**: PostgreSQL with SQLAlchemy ORM
 - **AI/LLM**: Groq API (default model: openai/gpt-oss-20b, configurable)
+- **Rate Limiting**: SlowAPI with in-memory storage (production-ready)
 - **External APIs**:
   - Open-Meteo (weather & UV data)
   - OpenAQ (air quality data)
@@ -49,6 +57,14 @@ Perfect for travelers who want to prepare their skincare/haircare routine before
    ```bash
    pip install -r requirements.txt
    ```
+   
+   Key dependencies include:
+   - FastAPI - Web framework
+   - SQLAlchemy - Database ORM
+   - SlowAPI - Rate limiting
+   - Groq SDK - LLM integration
+   - Pydantic Settings - Configuration management
+   - PostgreSQL drivers (psycopg2)
 
 4. **Configure environment variables**
    
@@ -87,9 +103,9 @@ Perfect for travelers who want to prepare their skincare/haircare routine before
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/api/analyze` | Get environmental analysis and personalized recommendations |
+| `POST` | `/api/analyze` | Get environmental analysis and personalized recommendations (⚠️ Rate limited: 10 requests/hour per IP) |
 | `GET` | `/api/health` | Check API health and service status |
-| `GET` | `/api/stats` | View usage statistics and insights |
+| `GET` | `/api/stats` | View usage statistics and API analytics (Rate limited: 30 requests/hour per IP) |
 | `GET` | `/` | Welcome message and API information |
 | `GET` | `/docs` | Interactive API documentation (Swagger UI) |
 
@@ -150,6 +166,13 @@ curl -X POST "http://localhost:8000/api/analyze" \
     "Stay in shade during peak sun hours (10 AM - 4 PM)",
     "Drink at least 2-3 liters of water daily"
   ],
+  "explanations": {
+    "why": [
+      "High UV index and pollution levels increase skin damage risk",
+      "Moderate humidity with high temperatures can cause oil production",
+      "Air quality concerns require protective skincare routine"
+    ]
+  },
   "confidence": "high"
 }
 ```
@@ -178,6 +201,8 @@ GeoDermal_Assistant/
 │   │   │       ├── health.py     # Health check endpoint
 │   │   │       ├── stats.py      # Statistics endpoint
 │   │   │       └── root.py       # Root/welcome endpoint
+│   │   ├── core/             # Core application features
+│   │   │   └── rate_limiter.py   # Rate limiting configuration
 │   │   ├── db/               # Database configuration
 │   │   │   ├── session.py    # DB session management
 │   │   │   └── base.py       # Base model class
@@ -206,12 +231,55 @@ GeoDermal_Assistant/
 
 ## Environment Variables
 
+The application uses centralized configuration management through Pydantic Settings for type-safe, validated configuration.
+
 See `backend/.env.example` for a complete list of required environment variables:
 
 - `DATABASE_URL`: PostgreSQL connection string
 - `GROQ_API_KEY`: API key from Groq (free tier available)
 - `SOURCE_VERSION`: Application version for tracking
 - `GROQ_MODEL` (optional): LLM model to use (defaults to "openai/gpt-oss-20b")
+
+**Configuration Features:**
+- Uses centralized `settings` configuration (not direct `os.getenv`)
+- All API keys managed through Pydantic Settings for validation
+- Type-safe configuration with automatic environment variable loading
+
+## 🛡️ API Protection
+
+The API includes built-in protection against abuse:
+
+- **Rate Limiting**: 10 requests/hour per IP on analysis endpoint, 30 requests/hour on stats endpoint
+- **Intelligent Error Handling**: Graceful fallbacks for external API failures
+- **Data Validation**: Pydantic schemas ensure request data integrity
+- **CORS Configuration**: Controlled cross-origin access
+
+Rate limit headers in every response:
+- `X-RateLimit-Limit`: Maximum requests allowed
+- `X-RateLimit-Remaining`: Requests remaining in current window
+- `X-RateLimit-Reset`: Unix timestamp when limit resets
+
+### Testing Rate Limits
+
+To test the rate limiting:
+
+```bash
+# Make 11 requests quickly - the 11th should be rate limited
+for i in {1..11}; do
+  curl -X POST http://localhost:8000/api/analyze \
+    -H "Content-Type: application/json" \
+    -d '{"destination": "Delhi", "concern": "skin", "skin_type": "dry", "duration_category": "2-7d", "month_or_season": "June"}'
+  echo "Request $i"
+done
+```
+
+Expected response after exceeding limit:
+```json
+{
+  "error": "Rate limit exceeded",
+  "message": "Too many requests. Please try again later."
+}
+```
 
 ## Development
 
@@ -247,6 +315,8 @@ Once the server is running, visit:
 ✅ Data quality validation and confidence scoring  
 ✅ Statistics tracking and analytics  
 ✅ RESTful API with comprehensive documentation  
+✅ Rate limiting protection against API abuse  
+✅ Type-safe configuration with Pydantic Settings  
 
 ## Contributing
 
