@@ -2,7 +2,7 @@ import { FaSun, FaCut } from 'react-icons/fa';
 
 function AnalysisType({ onTypeSelected }) {
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
+    <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto my-40">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-text-primary mb-2">
           What Would You Like to Analyze?

@@ -54,7 +54,7 @@ async def analyze(response: Response,request: Request,payload: AnalyzeRequest, d
     if lat is not None and lon is not None: 
         weather = await open_meteo.fetch_weather_and_uv(lat, lon)
         if weather:
-            env_report. update({
+            env_report.update({
                 "temperature_c": weather.get("temperature_c"),
                 "humidity":  weather.get("humidity"),
                 "uv_index": weather.get("uv_index")

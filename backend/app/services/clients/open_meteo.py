@@ -27,7 +27,8 @@ async def fetch_weather_and_uv(lat:  float, lon: float) -> Optional[Dict[str, An
     params = {
         "latitude": lat,
         "longitude":  lon,
-        "current":  "temperature_2m,relative_humidity_2m,uv_index",
+        "current":  "temperature_2m,relative_humidity_2m",
+        "daily": "uv_index_max",
         "timezone": "auto"
     }
     url = f"{BASE}/forecast"
@@ -38,11 +39,17 @@ async def fetch_weather_and_uv(lat:  float, lon: float) -> Optional[Dict[str, An
         try:
             data = await _get_with_retries(client, url, params)
             current = data.get("current", {})
+            daily = data.get("daily", {})
+            uv_index = None
+            if daily and "uv_index_max" in daily and len(daily["uv_index_max"]) > 0:
+                uv_index = daily["uv_index_max"][0]
+
+            print(uv_index)
             
             return {
                 "temperature_c":  current.get("temperature_2m"),
                 "humidity": current.get("relative_humidity_2m"),
-                "uv_index": current.get("uv_index")
+                "uv_index": uv_index
             }
         except Exception: 
             return None

@@ -3,7 +3,7 @@ function ProgressBar({ currentStep, totalSteps }) {
 
   return (
     <div className="mb-8">
-      <div className="flex justify-between text-sm text-text-secondary mb-2">
+      <div className="flex justify-between text-sm text-text-secondary mb-5">
         <span>Step {currentStep} of {totalSteps}</span>
         <span>{Math.round(progress)}% Complete</span>
       </div>
