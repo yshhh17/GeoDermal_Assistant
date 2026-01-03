@@ -118,7 +118,7 @@ function Results() {
 
         {/* Title */}
         <h1 className="text-4xl font-bold text-text-primary mb-8 text-center">
-          Your {analysisData. analysisType === 'skin' ? 'Skin' : 'Hair'} Analysis Results
+          Your {analysisData.analysisType === 'skin' ? 'Skin' : 'Hair'} Analysis Results
         </h1>
 
         {/* Comparison Card */}

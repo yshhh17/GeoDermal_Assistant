@@ -38,7 +38,7 @@ function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md: hidden pb-4 space-y-2">
+          <div className="md:hidden pb-4 space-y-2">
             <Link to="/" className="block py-2 text-text-secondary hover:text-primary-green" onClick={() => setIsOpen(false)}>
               Home
             </Link>

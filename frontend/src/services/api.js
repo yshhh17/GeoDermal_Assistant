@@ -21,7 +21,7 @@ api.interceptors.response.use(
       throw new Error(error.response.data.detail || error.response.data.message || 'An error occurred');
     } else if (error.request) {
       // Request made but no response
-      console. error('Network Error:', error.request);
+      console.error('Network Error:', error.request);
       throw new Error('Network error. Please check your connection.');
     } else {
       // Something else happened

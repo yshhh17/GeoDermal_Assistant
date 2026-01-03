@@ -37,7 +37,6 @@ function EnvironmentalData({ envData }) {
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6">
       <h3 className="text-2xl font-bold text-text-primary mb-6 flex items-center">
-        <FaWind className="mr-3 text-primary-blue" />
         Environmental Conditions
       </h3>
 

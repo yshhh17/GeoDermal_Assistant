@@ -3,19 +3,19 @@ import { FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa';
 function RiskScores({ risks, analysisType }) {
   // Define risk categories based on analysis type
   const skinRisks = [
-    { key: 'dryness', label: 'Dryness Risk', icon: '💧' },
-    { key:  'acne', label: 'Acne Risk', icon: '🔴' },
-    { key: 'irritation', label: 'Irritation Risk', icon: '⚠️' },
-    { key: 'uv_damage', label: 'UV Damage Risk', icon: '☀️' },
-    { key: 'pigmentation', label: 'Pigmentation Risk', icon: '🎨' }
+    { key: 'dryness', label: 'Dryness Risk'},
+    { key:  'acne', label: 'Acne Risk',},
+    { key: 'irritation', label: 'Irritation Risk'},
+    { key: 'uv_damage', label: 'UV Damage Risk'},
+    { key: 'pigmentation', label: 'Pigmentation Risk'}
   ];
 
   const hairRisks = [
-    { key: 'dryness', label: 'Dryness Risk', icon: '💧' },
-    { key: 'frizz', label: 'Frizz Risk', icon: '🌊' },
-    { key: 'breakage', label: 'Breakage Risk', icon: '✂️' },
-    { key:  'hairfall', label: 'Hair Fall Risk', icon: '🍂' },
-    { key: 'dandruff', label: 'Dandruff Risk', icon: '❄️' }
+    { key: 'dryness', label: 'Dryness Risk'},
+    { key: 'frizz', label: 'Frizz Risk'},
+    { key: 'breakage', label: 'Breakage Risk'},
+    { key:  'hairfall', label: 'Hair Fall Risk'},
+    { key: 'dandruff', label: 'Dandruff Risk'}
   ];
 
   const riskCategories = analysisType === 'skin' ? skinRisks : hairRisks;
@@ -23,7 +23,7 @@ function RiskScores({ risks, analysisType }) {
   const getRiskColor = (score) => {
     if (score <= 3) return 'bg-status-success';
     if (score <= 6) return 'bg-status-warning';
-    return 'bg-status-error';
+    return 'bg-status-danger';
   };
 
   const getRiskLabel = (score) => {
@@ -35,19 +35,18 @@ function RiskScores({ risks, analysisType }) {
   const getRiskTextColor = (score) => {
     if (score <= 3) return 'text-status-success';
     if (score <= 6) return 'text-status-warning';
-    return 'text-status-error';
+    return 'text-status-danger';
   };
 
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6">
       <h3 className="text-2xl font-bold text-text-primary mb-6 flex items-center">
-        <FaExclamationTriangle className="mr-3 text-status-warning" />
         Risk Assessment
       </h3>
 
       <div className="space-y-4">
-        {riskCategories. map((risk) => {
-          const score = risks[risk.key] || 0;
+        {riskCategories.map((risk) => {
+          const score = Number(risks[risk.key]) || 0;
           const percentage = (score / 10) * 100;
 
           return (
@@ -77,13 +76,13 @@ function RiskScores({ risks, analysisType }) {
       {/* Overall Summary */}
       <div className="mt-6 p-4 bg-bg-secondary rounded-lg">
         <div className="flex items-center justify-center">
-          {Object.values(risks).some(score => score > 6) ? (
+          {Object.values(risks).some(score => Number(score) > 6) ? (
             <FaExclamationTriangle className="text-status-error text-2xl mr-3" />
           ) : (
             <FaCheckCircle className="text-status-success text-2xl mr-3" />
           )}
           <span className="text-text-primary font-semibold">
-            {Object.values(risks).some(score => score > 6)
+            {Object.values(risks).some(score => Number(score) > 6)
               ? 'High risk detected - Follow recommendations carefully'
               : 'Overall risk is manageable with proper care'}
           </span>

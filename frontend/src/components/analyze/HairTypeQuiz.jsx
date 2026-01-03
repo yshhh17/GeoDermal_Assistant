@@ -126,7 +126,7 @@ function HairTypeQuiz({ onComplete }) {
         <button
           type="submit"
           disabled={!answers.hairType || !answers.texture}
-          className="w-full bg-primary-blue text-white py-4 rounded-lg font-semibold text-lg hover:shadow-lg transform hover:-translate-y-1 transition duration-200 disabled: opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+          className="w-full bg-primary-blue text-white py-4 rounded-lg font-semibold text-lg hover:shadow-lg transform hover:-translate-y-1 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
         >
           Continue →
         </button>

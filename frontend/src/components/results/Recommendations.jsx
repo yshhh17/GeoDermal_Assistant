@@ -4,8 +4,7 @@ function Recommendations({ recommendations, analysisType }) {
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6">
       <h3 className="text-2xl font-bold text-text-primary mb-6 flex items-center">
-        <FaLightbulb className="mr-3 text-primary-orange" />
-        Personalized Recommendations
+        Recommendations
       </h3>
 
       <div className="space-y-3">
