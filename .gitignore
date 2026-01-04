@@ -3,8 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
-. Python
-*. egg-info/
+.Python
+*.egg-info/
 dist/
 build/
 *.egg
@@ -19,9 +19,9 @@ env/
 
 # Environment variables (CRITICAL - never commit!)
 backend/.env
-. env
-*. env
-! .env. example
+.env
+*.env
+!.env.example
 
 # IDE
 .vscode/
@@ -29,7 +29,7 @@ backend/.env
 *.swp
 *.swo
 *~
-. DS_Store
+.DS_Store
 
 # Testing
 .pytest_cache/
@@ -53,7 +53,7 @@ data/models/*.pkl
 
 # Jupyter
 .ipynb_checkpoints/
-*. ipynb_checkpoints
+*.ipynb_checkpoints
 
 # OS
 .DS_Store
