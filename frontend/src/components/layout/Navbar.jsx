@@ -25,7 +25,7 @@ function Navbar() {
             <Link to="/about" className="text-text-secondary hover:text-primary-green transition">
               About
             </Link>
-            <a href="#contact" className="border-2 border-primary-blue text-primary-blue px-4 py-2 rounded-lg hover:bg-primary-blue hover:text-white transition">
+            <a href="/contact" className="border-2 border-primary-blue text-primary-blue px-4 py-2 rounded-lg hover:bg-primary-blue hover:text-white transition">
               Contact Us
             </a>
           </div>

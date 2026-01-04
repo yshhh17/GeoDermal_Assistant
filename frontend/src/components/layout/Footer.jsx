@@ -23,7 +23,7 @@ function Footer() {
             <ul className="space-y-2 text-sm text-text-muted">
               <li><Link to="/analyze" className="hover:text-primary-green transition">Analysis</Link></li>
               <li><a href="#" className="hover:text-primary-green transition">Features</a></li>
-              <li><a href="#" className="hover:text-primary-green transition">How it Works</a></li>
+              <li><a href="/how-it-works" className="hover:text-primary-green transition">How it Works</a></li>
             </ul>
           </div>
 
@@ -31,9 +31,9 @@ function Footer() {
           <div>
             <h3 className="font-bold mb-4">Company</h3>
             <ul className="space-y-2 text-sm text-text-muted">
-              <li><a href="#" className="hover:text-primary-green transition">About Us</a></li>
-              <li><a href="#" className="hover:text-primary-green transition">Contact</a></li>
-              <li><a href="#" className="hover:text-primary-green transition">Privacy Policy</a></li>
+              <li><a href="/about" className="hover:text-primary-green transition">About Us</a></li>
+              <li><a href="/contact" className="hover:text-primary-green transition">Contact</a></li>
+              <li><a href="/privacy" className="hover:text-primary-green transition">Privacy Policy</a></li>
             </ul>
           </div>
 
@@ -41,13 +41,13 @@ function Footer() {
           <div>
             <h3 className="font-bold mb-4">Follow Us</h3>
             <div className="flex space-x-4">
-              <a href="#" className="text-2xl hover:text-primary-green transition">
+              <a href="https://github.com/yshhh17" className="text-2xl hover:text-primary-green transition">
                 <FaGithub />
               </a>
               <a href="#" className="text-2xl hover:text-primary-green transition">
                 <FaTwitter />
               </a>
-              <a href="#" className="text-2xl hover:text-primary-green transition">
+              <a href="https://www.linkedin.com/in/yash-tiwari-b36343289" className="text-2xl hover:text-primary-green transition">
                 <FaLinkedin />
               </a>
             </div>

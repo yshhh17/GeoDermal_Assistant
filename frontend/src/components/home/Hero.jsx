@@ -60,10 +60,6 @@ function Hero() {
               Learn More
             </button>
           </div>
-
-          <p className="text-xs sm:text-sm text-text-muted mt-4 sm:mt-6">
-            Step 1 of 6: City search destination
-          </p>
         </div>
       </div>
     </section>
