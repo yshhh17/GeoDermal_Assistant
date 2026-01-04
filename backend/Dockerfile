@@ -11,15 +11,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    pkg-config \
-    cmake \
-    python3-dev \
-    libdbus-1-dev \
-    libglib2.0-dev \
-    libcairo2-dev \
-    libgirepository1.0-dev \
-    gir1.2-glib-2.0 \
+    gcc \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 

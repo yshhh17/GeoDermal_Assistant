@@ -30,7 +30,7 @@ services:
     container_name: geodermal_backend
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://geodermal:${DB_PASSWORD}@db:5432/geodermal
+      DATABASE_URL: postgresql+psycopg2://geodermal:${DB_PASSWORD}@db:5432/geodermal
       GROQ_API_KEY: ${GROQ_API_KEY}
       SOURCE_VERSION: ${SOURCE_VERSION}
       GROQ_MODEL: ${GROQ_MODEL}
@@ -41,7 +41,6 @@ services:
       APP_NAME: ${APP_NAME}
 
     volumes:
-      - ./backend:/app
       - ./data:/app/data
     ports:
       - "8000:8000"
