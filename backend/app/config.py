@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     HTTP_TIMEOUT: int = 10
     DATABASE_URL: str
     SOURCE_VERSION: str
+    FRONTEND_URL: str
     class Config:
         # Try multiple locations for .env file
         env_file = str(Path(__file__).parent.parent / ".env")
