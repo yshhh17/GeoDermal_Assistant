@@ -51,7 +51,8 @@ function Hero() {
               Get Started Now →
             </Link>
 
-            <button className="border-2 border-primary-green 
+            <Link  to="/how-it-works">
+              <button className="border-2 border-primary-green 
               text-primary-green 
               px-7 py-3 sm:px-8 sm:py-4 
               rounded-xl text-base sm:text-lg font-semibold 
@@ -59,6 +60,7 @@ function Hero() {
             >
               Learn More
             </button>
+            </Link>
           </div>
         </div>
       </div>
