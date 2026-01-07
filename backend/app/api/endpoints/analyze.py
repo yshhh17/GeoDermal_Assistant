@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from ... schemas.inputs import AnalyzeRequest
+from ...schemas.inputs import AnalyzeRequest
 from typing import Dict, Any
 from ... services.geocode import geocode_place
 from ...services.clients import open_meteo, openaq
 from ...services.aqi_calculator import calculate_aqi_from_pm25
-from ... services.data_quality import check_data_quality, validate_env_data
-from ... db.session import get_db
+from ...services.data_quality import check_data_quality, validate_env_data
+from ...db.session import get_db
 from ...models.report import Report
 from ...config import settings
 import logging

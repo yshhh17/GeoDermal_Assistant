@@ -44,7 +44,11 @@ def load_water_quality_data() -> pd.DataFrame:
     if _WATER_DATA is not None:
         return _WATER_DATA
     
-    csv_path = Path(__file__).resolve().parents[4] / "data" / "raw" / "india_water_quality.csv"
+    primary = Path(__file__).resolve().parents[4] / "data" / "raw" / "india_water_quality.csv"
+
+    secondary = Path(__file__).resolve().parents[3] / "quality" / "india_water_quality.csv"
+
+    csv_path = primary if primary.exists() else secondary
     
     if not csv_path.exists():
         logger.error(f"Water quality CSV not found at {csv_path}")

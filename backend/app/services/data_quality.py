@@ -1,11 +1,11 @@
 """
-Data quality checks and confidence scoring. 
+Data quality checks and confidence scoring.
 """
 from typing import Dict, Any, List, Tuple
 
 def check_data_quality(env_report: Dict[str, Any]) -> Tuple[bool, List[str], str]:
     """
-    Check data quality and return flags. 
+    Check data quality and return flags.
     
     Args:
         env_report: Environmental report dictionary from /api/analyze
@@ -44,7 +44,7 @@ def check_data_quality(env_report: Dict[str, Any]) -> Tuple[bool, List[str], str
     
     # Check optional fields
     for field in optional_fields: 
-        value = env_report. get(field)
+        value = env_report.get(field)
         if value is None:
             missing_fields.append(field)
     
@@ -96,7 +96,7 @@ def validate_env_data(env_report: Dict[str, Any]) -> Dict[str, Any]:
     
     # PM2.5 and PM10 should be non-negative
     for field in ["pm25", "pm10"]:
-        if cleaned. get(field) is not None and cleaned[field] < 0:
+        if cleaned.get(field) is not None and cleaned[field] < 0:
             cleaned[field] = None
     
     # AQI should be 0-500
