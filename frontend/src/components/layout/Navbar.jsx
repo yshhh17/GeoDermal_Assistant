@@ -48,7 +48,7 @@ function Navbar() {
             <Link to="/about" className="block py-2 text-text-secondary hover:text-primary-green" onClick={() => setIsOpen(false)}>
               About
             </Link>
-            <a href="#contact" className="block border-2 border-primary-blue text-primary-blue px-4 py-2 rounded-lg hover:bg-primary-blue hover:text-white transition w-fit" onClick={() => setIsOpen(false)}>
+            <a href="/contact" className="block border-2 border-primary-blue text-primary-blue px-4 py-2 rounded-lg hover:bg-primary-blue hover:text-white transition w-fit" onClick={() => setIsOpen(false)}>
               Contact Us
             </a>
           </div>
