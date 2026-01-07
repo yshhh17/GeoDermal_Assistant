@@ -86,7 +86,7 @@ function CitySearch({ onCitiesSelected }) {
           <select
             value={destinationCity}
             onChange={(e) => setDestinationCity(e.target.value)}
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-blue focus: outline-none transition bg-white"
+            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-blue focus:outline-none transition bg-white"
             required
           >
             <option value="">-- Select your destination --</option>

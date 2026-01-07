@@ -30,7 +30,7 @@ function AnalysisType({ onTypeSelected }) {
         {/* Hair Analysis */}
         <button
           onClick={() => onTypeSelected('hair')}
-          className="group bg-gradient-to-br from-bg-secondary to-bg-accent p-8 rounded-xl border-2 border-transparent hover: border-primary-blue transition duration-300 transform hover:-translate-y-2 hover: shadow-xl"
+          className="group bg-gradient-to-br from-bg-secondary to-bg-accent p-8 rounded-xl border-2 border-transparent hover:border-primary-blue transition duration-300 transform hover:-translate-y-2 hover:shadow-xl"
         >
           <FaCut className="text-6xl text-primary-blue mx-auto mb-4 group-hover:scale-110 transition" />
           <h3 className="text-2xl font-bold text-text-primary mb-2">
