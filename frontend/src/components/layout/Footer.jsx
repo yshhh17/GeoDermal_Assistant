@@ -21,7 +21,7 @@ function Footer() {
           <div>
             <h3 className="font-bold mb-4">Product</h3>
             <ul className="space-y-2 text-sm text-text-muted">
-              <li><Link to="/analyze" className="hover:text-primary-green transition">Analysis</Link></li>
+              <li><a href="/analyze" className="hover:text-primary-green transition">Analysis</a></li>
               <li><a href="#" className="hover:text-primary-green transition">Features</a></li>
               <li><a href="/how-it-works" className="hover:text-primary-green transition">How it Works</a></li>
             </ul>

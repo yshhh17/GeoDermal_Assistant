@@ -20,7 +20,7 @@ function HowItWorks() {
       number: 2,
       icon: FaClipboardCheck,
       title: 'Choose Analysis Type',
-      description: 'Tell us whether you want skin care or hair care recommendations for your trip.',
+      description:  'Tell us whether you want skin care or hair care recommendations for your trip.',
       color: 'from-primary-blue to-primary-orange',
       details: [
         'Skin analysis: UV, pollution, climate effects',
@@ -32,7 +32,7 @@ function HowItWorks() {
       number: 3,
       icon: FaBrain,
       title: 'Answer Quick Questions',
-      description: 'Help us understand your skin or hair type and any specific concerns you have.',
+      description:  'Help us understand your skin or hair type and any specific concerns you have.',
       color: 'from-primary-sage to-status-warning',
       details: [
         'Takes less than 2 minutes',
@@ -82,94 +82,101 @@ function HowItWorks() {
     <div className="min-h-screen bg-gradient-to-br from-bg-secondary to-bg-accent">
       <Navbar />
       
-      <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-text-primary mb-4">
+        <div className="text-center mb-10 sm:mb-12 lg:mb-16">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary mb-3 sm:mb-4">
             How It Works
           </h1>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-xl text-text-secondary max-w-3xl mx-auto px-4">
             Get personalized skin and hair care recommendations in 6 simple steps
           </p>
         </div>
 
         {/* Steps */}
-        <div className="space-y-8 mb-16">
+        <div className="space-y-6 sm:space-y-8 mb-10 sm:mb-12 lg:mb-16">
           {steps.map((step, index) => (
-            <div key={step.number} className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
-              <div className="flex flex-col md:flex-row items-start gap-6">
+            <div key={step.number} className="bg-white rounded-2xl sm:rounded-3xl shadow-lg sm:shadow-xl p-5 sm:p-8 lg:p-12 hover:shadow-2xl transition-shadow duration-300">
+              <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
                 {/* Step Number & Icon */}
-                <div className="flex-shrink-0">
-                  <div className={`w-20 h-20 bg-gradient-to-br ${step.color} rounded-2xl flex items-center justify-center text-white text-3xl font-bold shadow-lg`}>
+                <div className="flex-shrink-0 flex sm:flex-col items-center sm:items-start gap-4 sm:gap-0">
+                  <div className={`w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br ${step.color} rounded-xl sm:rounded-2xl flex items-center justify-center text-white text-2xl sm:text-3xl font-bold shadow-lg`}>
                     {step.number}
                   </div>
-                  <div className="mt-4 flex justify-center">
-                    <step.icon className="text-4xl text-primary-green" />
+                  <div className="sm:mt-4 flex justify-center">
+                    <step.icon className="text-3xl sm:text-4xl text-primary-green" />
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="flex-1">
-                  <h3 className="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+                <div className="flex-1 w-full">
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-text-primary mb-2 sm:mb-3">
                     {step.title}
                   </h3>
-                  <p className="text-lg text-text-secondary mb-4">
+                  <p className="text-base sm:text-lg text-text-secondary mb-3 sm:mb-4 leading-relaxed">
                     {step.description}
                   </p>
                   
                   {/* Details */}
-                  <div className="space-y-2">
-                    {step.details.map((detail, idx) => (
-                      <div key={idx} className="flex items-start">
-                        <FaCheckCircle className="text-primary-green mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-text-secondary">{detail}</span>
+                  <div className="space-y-2 sm:space-y-2. 5">
+                    {step. details.map((detail, idx) => (
+                      <div key={idx} className="flex items-start gap-2 sm:gap-3">
+                        <FaCheckCircle className="text-primary-green mt-0.5 sm:mt-1 flex-shrink-0 text-sm sm:text-base" />
+                        <span className="text-sm sm:text-base text-text-secondary leading-relaxed">{detail}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
+
+              {/* Connector Line (not last item) */}
+              {index < steps.length - 1 && (
+                <div className="flex justify-center mt-6 sm:mt-8">
+                  <div className="w-1 h-8 sm:h-12 bg-gradient-to-b from-gray-300 to-transparent rounded-full"></div>
+                </div>
+              )}
             </div>
           ))}
         </div>
 
         {/* Technology Section */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-8">
-          <h2 className="text-3xl font-bold text-text-primary mb-8 text-center">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg sm:shadow-xl p-6 sm:p-8 lg:p-12 mb-6 sm:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-6 sm:mb-8 text-center">
             Powered by Advanced Technology
           </h2>
-          <div className="grid md: grid-cols-3 gap-6">
-            <div className="text-center p-6 bg-bg-secondary rounded-xl">
-              <h3 className="text-xl font-bold text-text-primary mb-2">Real-Time APIs</h3>
-              <p className="text-text-secondary">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="text-center p-5 sm:p-6 bg-bg-secondary rounded-xl hover:shadow-md transition-shadow duration-300">
+              <h3 className="text-lg sm:text-xl font-bold text-text-primary mb-2">Real-Time APIs</h3>
+              <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
                 Open-Meteo for weather & UV, OpenAQ for air quality, custom water quality database
               </p>
             </div>
 
-            <div className="text-center p-6 bg-bg-accent rounded-xl">
-              <h3 className="text-xl font-bold text-text-primary mb-2">AI Analysis</h3>
-              <p className="text-text-secondary">
+            <div className="text-center p-5 sm:p-6 bg-bg-accent rounded-xl hover:shadow-md transition-shadow duration-300">
+              <h3 className="text-lg sm:text-xl font-bold text-text-primary mb-2">AI Analysis</h3>
+              <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
                 Groq LLM for intelligent risk assessment and personalized recommendations
               </p>
             </div>
 
-            <div className="text-center p-6 bg-bg-secondary rounded-xl">
-              <h3 className="text-xl font-bold text-text-primary mb-2">Secure & Private</h3>
-              <p className="text-text-secondary">
-                Your data is never shared.  Rate limiting prevents abuse.  Built with security first.
+            <div className="text-center p-5 sm:p-6 bg-bg-secondary rounded-xl hover:shadow-md transition-shadow duration-300 sm:col-span-2 lg:col-span-1">
+              <h3 className="text-lg sm:text-xl font-bold text-text-primary mb-2">Secure & Private</h3>
+              <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
+                Your data is never shared.  Rate limiting prevents abuse. Built with security first.
               </p>
             </div>
           </div>
         </div>
 
         {/* CTA Section */}
-        <div className="bg-gradient-to-r from-primary-green to-primary-blue text-white rounded-3xl shadow-xl p-8 md:p-12 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-lg mb-8 max-w-2xl mx-auto">
+        <div className="bg-gradient-to-r from-primary-green to-primary-blue text-white rounded-2xl sm:rounded-3xl shadow-lg sm:shadow-xl p-6 sm:p-8 lg:p-12 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Ready to Get Started?</h2>
+          <p className="text-base sm:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto px-4 leading-relaxed">
             Get personalized skin or hair care recommendations for your next trip in under 5 minutes
           </p>
           <a
             href="/analyze"
-            className="inline-block bg-white text-primary-green px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transform hover:-translate-y-1 transition"
+            className="inline-block bg-white text-primary-green px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-bold text-base sm:text-lg hover:shadow-2xl transform hover:-translate-y-1 transition duration-300"
           >
             Start Your Analysis Now →
           </a>
