@@ -36,8 +36,8 @@ function Analyze() {
   };
 
   const handleDurationComplete = (durationData) => {
-    const finalData = { ...analysisData, duration: durationData. duration };
-    localStorage.setItem('analysisData', JSON. stringify(finalData));
+    const finalData = { ...analysisData, duration: durationData.duration };
+    localStorage.setItem('analysisData', JSON.stringify(finalData));
     navigate('/results');
   };
 
@@ -89,7 +89,7 @@ function Analyze() {
 
         {/* Leaf/Natural - Center Right */}
         <svg className="absolute top-1/2 right-32 w-20 h-20 md:w-32 md:h-32" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M17 8C8 10 5. 9 16.17 3. 82 21.34l1.89. 67C7.89 17.03 10. 15 12. 9 17 11V8zm0-2l4 4-4 4V8z"/>
+          <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.67C7.89 17.03 10.15 12.9 17 11V8zm0-2l4 4-4 4V8z"/>
         </svg>
       </div>
 
@@ -113,7 +113,7 @@ function Analyze() {
         {step === 4 && (
           <TravelDuration 
             onComplete={handleDurationComplete} 
-            analysisType={analysisData. analysisType}
+            analysisType={analysisData.analysisType}
           />
         )}
       </div>
