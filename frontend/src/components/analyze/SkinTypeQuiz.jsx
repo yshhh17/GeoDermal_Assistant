@@ -28,14 +28,14 @@ function SkinTypeQuiz({ onComplete }) {
     setAnswers(prev => ({
       ...prev,
       concerns: prev.concerns.includes(concern)
-        ? prev.concerns. filter(c => c !== concern)
+        ? prev.concerns.filter(c => c !== concern)
         : [...prev.concerns, concern]
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (answers.skinType && answers. sensitivity) {
+    if (answers.skinType && answers.sensitivity) {
       onComplete(answers);
     }
   };
@@ -62,7 +62,7 @@ function SkinTypeQuiz({ onComplete }) {
               <button
                 key={type.value}
                 type="button"
-                onClick={() => setAnswers(prev => ({ ...prev, skinType: type. value }))}
+                onClick={() => setAnswers(prev => ({ ...prev, skinType: type.value }))}
                 className={`p-4 rounded-lg border-2 text-left transition ${
                   answers.skinType === type.value
                     ? 'border-primary-green bg-bg-secondary'
