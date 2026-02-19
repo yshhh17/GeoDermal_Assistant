@@ -20,7 +20,7 @@ function Results() {
     // Get analysis data from localStorage
     const storedData = localStorage.getItem('analysisData');
     
-    if (! storedData) {
+    if (!storedData) {
       navigate('/analyze');
       return;
     }
@@ -98,7 +98,7 @@ function Results() {
     );
   }
 
-  if (! results) {
+  if (!results) {
     return null;
   }
 

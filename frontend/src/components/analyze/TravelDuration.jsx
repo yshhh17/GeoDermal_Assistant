@@ -41,7 +41,7 @@ function TravelDuration({ onComplete, analysisType }) {
               key={dur.value}
               type="button"
               onClick={() => {
-                setDuration(dur. value);
+                setDuration(dur.value);
                 if (dur.value !== 'custom') setCustomDays('');
               }}
               className={`p-6 rounded-lg border-2 transition transform hover:-translate-y-1 ${
