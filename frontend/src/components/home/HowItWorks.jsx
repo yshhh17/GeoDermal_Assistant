@@ -32,49 +32,68 @@ function HowItWorks() {
   return (
     <section className="bg-bg-secondary py-12 sm:py-16 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Title */}
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary text-center mb-10 sm:mb-14 lg:mb-20">
-          How It Works
-        </h2>
+        <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-8 lg:gap-12">
+          <div className="lg:sticky lg:top-24 h-fit">
+            <span className="inline-block text-sm font-semibold uppercase tracking-wider text-primary-green mb-3">
+              How It Works
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-4">
+              A vertical flow from destination to routine
+            </h2>
+            <p className="text-text-secondary text-base sm:text-lg leading-relaxed">
+              Each step builds on the previous one so recommendations feel guided, not generic.
+            </p>
+          </div>
 
-        {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {steps.map((step, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl p-6 sm:p-8 shadow-md hover:shadow-xl transition transform hover:-translate-y-1"
-            >
-              {/* Number */}
-              <div
-                className={`${step.color} w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white text-xl sm:text-2xl font-bold shadow-lg mb-6`}
-              >
-                {step.number}
-              </div>
+          <div className="relative">
+            <div className="hidden lg:block absolute left-6 top-6 bottom-24 w-px bg-gradient-to-b from-primary-green via-primary-blue to-primary-sage"></div>
 
-              {/* Icon */}
-              <step.icon className="text-4xl sm:text-5xl text-text-primary mb-4" />
+            <div className="space-y-5 sm:space-y-6">
+              {steps.map((step, index) => (
+                <div
+                  key={index}
+                  className="grid lg:grid-cols-[48px_1fr] gap-4 lg:gap-5 items-start"
+                >
+                  <div className="hidden lg:flex items-start justify-center pt-6">
+                    <div className="w-9 h-9 rounded-full bg-white border-2 border-primary-blue flex items-center justify-center text-primary-blue text-sm font-bold z-10">
+                      {step.number}
+                    </div>
+                  </div>
 
-              {/* Title */}
-              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-text-primary mb-3">
-                {step.title}
-              </h3>
+                  <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
+                    <div className="flex items-start gap-4 sm:gap-5">
+                      <div
+                        className={`${step.color} w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center text-white shadow-lg shrink-0`}
+                      >
+                        <step.icon className="text-xl sm:text-2xl" />
+                      </div>
 
-              {/* Description */}
-              <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
-                {step.description}
-              </p>
+                      <div>
+                        <p className="lg:hidden text-xs font-semibold text-primary-blue mb-2">
+                          Step {step.number}
+                        </p>
+                        <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-text-primary mb-2">
+                          {step.title}
+                        </h3>
+                        <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
+                          {step.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {/* CTA */}
-        <div className="mt-12 sm:mt-16 lg:mt-20 text-center">
-          <Link
-            to="/analyze"
-            className="inline-block bg-gradient-to-r from-primary-green to-primary-blue text-white px-7 sm:px-9 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:shadow-2xl transform hover:-translate-y-1 transition"
-          >
-            Start Your Analysis →
-          </Link>
+            <div className="mt-10 text-left">
+              <Link
+                to="/analyze"
+                className="inline-block bg-gradient-to-r from-primary-green to-primary-blue text-white px-7 sm:px-9 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:shadow-2xl transform hover:-translate-y-1 transition"
+              >
+                Start Your Analysis →
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>
