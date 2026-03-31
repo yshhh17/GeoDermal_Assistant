@@ -1,0 +1,16 @@
+export const colors = {
+  bgMain: '#F6FBF9',
+  bgSecondary: '#ECF7F3',
+  bgAccent: '#F2F6FF',
+  white: '#FFFFFF',
+  textPrimary: '#1D2B36',
+  textSecondary: '#3D5463',
+  textMuted: '#7991A1',
+  primaryGreen: '#2BB673',
+  primaryBlue: '#3B82F6',
+  primaryOrange: '#F59E0B',
+  danger: '#E11D48',
+  warning: '#D97706',
+  success: '#15803D',
+  border: '#D7E3EA',
+};
