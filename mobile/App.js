@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeScreen from './src/screens/HomeScreen';
 import AnalyzeScreen from './src/screens/AnalyzeScreen';
 import ResultsScreen from './src/screens/ResultsScreen';
@@ -44,6 +45,8 @@ function AnalyzeStackScreen() {
 }
 
 function MainTabs() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -56,8 +59,8 @@ function MainTabs() {
           shadowColor: '#000',
           shadowOpacity: 0.08,
           shadowRadius: 12,
-          height: 64,
-          paddingBottom: 8,
+          height: 56 + Math.max(insets.bottom, 8),
+          paddingBottom: Math.max(insets.bottom, 8),
           paddingTop: 8,
         },
         tabBarIcon: ({ focused, color, size }) => {
