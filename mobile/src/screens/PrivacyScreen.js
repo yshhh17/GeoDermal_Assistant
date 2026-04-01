@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import AnimatedScreen from '../components/AnimatedScreen';
+import AppFooter from '../components/layout/AppFooter';
 import { colors } from '../theme/colors';
 
 export default function PrivacyScreen() {
@@ -19,6 +20,7 @@ export default function PrivacyScreen() {
             Avoid embedding secret API keys in mobile code; keep credentials only in backend environment configuration.
           </Text>
         </View>
+        <AppFooter />
       </AnimatedScreen>
     </ScrollView>
   );
@@ -26,7 +28,7 @@ export default function PrivacyScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bgMain },
-  content: { padding: 16 },
+  content: { padding: 16, paddingBottom: 32 },
   title: {
     color: colors.textPrimary,
     fontSize: 30,

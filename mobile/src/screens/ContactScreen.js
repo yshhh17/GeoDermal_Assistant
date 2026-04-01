@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import AnimatedScreen from '../components/AnimatedScreen';
+import AppFooter from '../components/layout/AppFooter';
 import { colors } from '../theme/colors';
 
 export default function ContactScreen() {
@@ -16,6 +17,7 @@ export default function ContactScreen() {
           <Text style={styles.label}>Note</Text>
           <Text style={styles.value}>This mobile client uses the same backend services as the web app.</Text>
         </View>
+        <AppFooter />
       </AnimatedScreen>
     </ScrollView>
   );
@@ -23,7 +25,7 @@ export default function ContactScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bgMain },
-  content: { padding: 16 },
+  content: { padding: 16, paddingBottom: 32 },
   title: {
     color: colors.textPrimary,
     fontSize: 30,
