@@ -5,6 +5,7 @@ import AnimatedScreen from '../components/AnimatedScreen';
 import StepIndicator from '../components/StepIndicator';
 import OptionCard from '../components/OptionCard';
 import PrimaryButton from '../components/PrimaryButton';
+import AppFooter from '../components/layout/AppFooter';
 import { colors } from '../theme/colors';
 import { INDIAN_CITIES } from '../constants/cities';
 import {
@@ -299,6 +300,7 @@ export default function AnalyzeScreen({ navigation }) {
           {step === 3 && analysisData.analysisType === 'hair' && renderHairQuiz()}
           {step === 4 && renderDurationStep()}
         </View>
+        <AppFooter />
       </AnimatedScreen>
     </ScrollView>
   );

@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import AnimatedScreen from '../components/AnimatedScreen';
 import MetricCard from '../components/MetricCard';
+import AppFooter from '../components/layout/AppFooter';
 import { analyzeDestination } from '../services/api';
 import { colors } from '../theme/colors';
 import { getRiskMeta } from '../utils/mappers';
@@ -76,24 +77,34 @@ export default function ResultsScreen({ route, navigation }) {
 
   if (loading) {
     return (
-      <View style={styles.centerWrap}>
-        <ActivityIndicator color={colors.primaryGreen} size="large" />
-        <Text style={styles.loadingTitle}>Analyzing destination...</Text>
-        <Text style={styles.loadingSub}>Fetching weather, AQI, water quality and building recommendations.</Text>
-      </View>
+      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+        <AnimatedScreen>
+          <View style={styles.centerCard}>
+            <ActivityIndicator color={colors.primaryGreen} size="large" />
+            <Text style={styles.loadingTitle}>Analyzing destination...</Text>
+            <Text style={styles.loadingSub}>Fetching weather, AQI, water quality and building recommendations.</Text>
+          </View>
+          <AppFooter />
+        </AnimatedScreen>
+      </ScrollView>
     );
   }
 
   if (error) {
     return (
-      <View style={styles.centerWrap}>
-        <Ionicons name="warning-outline" size={44} color={colors.danger} />
-        <Text style={styles.errorTitle}>Something went wrong</Text>
-        <Text style={styles.errorSub}>{error}</Text>
-        <Pressable style={styles.retryBtn} onPress={() => navigation.replace('Results', { analysisData })}>
-          <Text style={styles.retryText}>Try Again</Text>
-        </Pressable>
-      </View>
+      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+        <AnimatedScreen>
+          <View style={styles.centerCard}>
+            <Ionicons name="warning-outline" size={44} color={colors.danger} />
+            <Text style={styles.errorTitle}>Something went wrong</Text>
+            <Text style={styles.errorSub}>{error}</Text>
+            <Pressable style={styles.retryBtn} onPress={() => navigation.replace('Results', { analysisData })}>
+              <Text style={styles.retryText}>Try Again</Text>
+            </Pressable>
+          </View>
+          <AppFooter />
+        </AnimatedScreen>
+      </ScrollView>
     );
   }
 
@@ -163,6 +174,7 @@ export default function ResultsScreen({ route, navigation }) {
             </View>
           ) : null}
         </View>
+        <AppFooter />
       </AnimatedScreen>
     </ScrollView>
   );
@@ -171,12 +183,16 @@ export default function ResultsScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bgMain },
   content: { padding: 16, paddingBottom: 32 },
-  centerWrap: {
-    flex: 1,
+  centerCard: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.bgMain,
+    backgroundColor: colors.white,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: colors.border,
     padding: 18,
+    minHeight: 240,
+    marginBottom: 14,
   },
   loadingTitle: {
     marginTop: 10,

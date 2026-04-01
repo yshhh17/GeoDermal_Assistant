@@ -33,7 +33,7 @@ app.add_exception_handler(RateLimitExceeded, rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_URL, "http://localhost:3000", "http://localhost:5173",],
+    allow_origins=[settings.FRONTEND_URL, "http://localhost:3000", "http://localhost:5173","http://192.168.1.42:8000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
