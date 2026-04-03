@@ -1,19 +1,18 @@
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
-import { FaShieldAlt, FaLock, FaUserSecret, FaDatabase } from 'react-icons/fa';
+import { FaShieldAlt } from 'react-icons/fa';
 
 function Privacy() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-bg-secondary to-bg-accent">
       <Navbar />
       
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
+      <div className="max-w-4xl mx-auto px-4 py-10 sm:py-12">
+        <div className="text-center mb-10 sm:mb-12">
           <div className="inline-block p-4 bg-primary-green rounded-full mb-4">
             <FaShieldAlt className="text-5xl text-white" />
           </div>
-          <h1 className="text-5xl font-bold text-text-primary mb-4">
+          <h1 className="text-4xl sm:text-5xl font-bold text-text-primary mb-4">
             Privacy Policy
           </h1>
           <p className="text-lg text-text-secondary">
@@ -21,16 +20,13 @@ function Privacy() {
           </p>
         </div>
 
-        {/* Main Content */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 space-y-8">
-          {/* Introduction */}
+        <div className="bg-white rounded-3xl shadow-xl p-6 sm:p-8 md:p-12 space-y-8">
           <section>
             <p className="text-lg text-text-secondary leading-relaxed">
               At GeoDermal Assistant, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your information when you use our service.
             </p>
           </section>
 
-          {/* Information We Collect */}
           <section>
             <div className="flex items-center mb-4">
               <h2 className="text-2xl font-bold text-text-primary">Information We Collect</h2>
@@ -57,7 +53,6 @@ function Privacy() {
             </div>
           </section>
 
-          {/* How We Use Your Information */}
           <section>
             <div className="flex items-center mb-4">
               <h2 className="text-2xl font-bold text-text-primary">How We Use Your Information</h2>
@@ -72,7 +67,6 @@ function Privacy() {
             </ul>
           </section>
 
-          {/* Data Storage and Security */}
           <section>
             <div className="flex items-center mb-4">
               <h2 className="text-2xl font-bold text-text-primary">Data Storage and Security</h2>
@@ -89,12 +83,11 @@ function Privacy() {
                 <li>No storage of sensitive payment information</li>
               </ul>
               <p className="mt-4">
-                Your analysis data is stored temporarily in your browser's localStorage and is never transmitted to third parties.
+                Your analysis data is stored temporarily in your browser&apos;s localStorage and is never transmitted to third parties.
               </p>
             </div>
           </section>
 
-          {/* What We DON'T Do */}
           <section>
             <div className="flex items-center mb-4">
               <h2 className="text-2xl font-bold text-text-primary">What We DON'T Do</h2>
@@ -120,7 +113,6 @@ function Privacy() {
             </div>
           </section>
 
-          {/* Third-Party Services */}
           <section>
             <h2 className="text-2xl font-bold text-text-primary mb-4">Third-Party Services</h2>
             <p className="text-text-secondary mb-4 ml-0">
@@ -129,7 +121,7 @@ function Privacy() {
             <div className="space-y-3 ml-0">
               <div className="bg-bg-secondary p-4 rounded-lg">
                 <h3 className="font-semibold text-text-primary mb-1">Open-Meteo API</h3>
-                <p className="text-sm text-text-secondary">For weather and UV index data.  No personal data shared.</p>
+                <p className="text-sm text-text-secondary">For weather and UV index data. No personal data shared.</p>
               </div>
               <div className="bg-bg-secondary p-4 rounded-lg">
                 <h3 className="font-semibold text-text-primary mb-1">OpenAQ API</h3>
@@ -142,7 +134,6 @@ function Privacy() {
             </div>
           </section>
 
-          {/* Your Rights */}
           <section>
             <h2 className="text-2xl font-bold text-text-primary mb-4">Your Rights</h2>
             <div className="text-text-secondary space-y-3 ml-0">
@@ -155,43 +146,39 @@ function Privacy() {
                 <li>Request a copy of your data</li>
               </ul>
               <p className="mt-4">
-                To exercise these rights, contact us at <a href="mailto: yshhh173@gmail.com" className="text-primary-green font-semibold hover:underline">yshhh173@gmail.com</a>
+                To exercise these rights, contact us at <a href="mailto:yshhh173@gmail.com" className="text-primary-green font-semibold hover:underline">yshhh173@gmail.com</a>
               </p>
             </div>
           </section>
 
-          {/* Cookies */}
           <section>
             <h2 className="text-2xl font-bold text-text-primary mb-4">Cookies and Local Storage</h2>
             <p className="text-text-secondary ml-0">
-              We use browser localStorage to temporarily store your analysis data for the session.  This data remains on your device and is never automatically transmitted to our servers.  You can clear this data at any time through your browser settings.
+              We use browser localStorage to temporarily store your analysis data for the session. This data remains on your device and is never automatically transmitted to our servers. You can clear this data at any time through your browser settings.
             </p>
           </section>
 
-          {/* Children's Privacy */}
           <section>
             <h2 className="text-2xl font-bold text-text-primary mb-4">Children's Privacy</h2>
             <p className="text-text-secondary ml-0">
-              Our service is not directed to children under 13 years of age. We do not knowingly collect personal information from children.  If you believe we have collected information from a child, please contact us immediately.
+              Our service is not directed to children under 13 years of age. We do not knowingly collect personal information from children. If you believe we have collected information from a child, please contact us immediately.
             </p>
           </section>
 
-          {/* Changes to Policy */}
           <section>
             <h2 className="text-2xl font-bold text-text-primary mb-4">Changes to This Policy</h2>
             <p className="text-text-secondary ml-0">
-              We may update this Privacy Policy from time to time. We will notify users of any material changes by updating the "Last updated" date at the top of this policy.  Continued use of the service after changes constitutes acceptance of the updated policy. 
+              We may update this Privacy Policy from time to time. We will notify users of any material changes by updating the &quot;Last updated&quot; date at the top of this policy. Continued use of the service after changes constitutes acceptance of the updated policy.
             </p>
           </section>
 
-          {/* Contact */}
           <section className="border-t-2 border-gray-200 pt-8">
             <h2 className="text-2xl font-bold text-text-primary mb-4">Contact Us</h2>
             <p className="text-text-secondary mb-4">
-              If you have any questions about this Privacy Policy, please contact us: 
+              If you have any questions about this Privacy Policy, please contact us:
             </p>
             <div className="bg-bg-accent p-6 rounded-xl">
-              <p className="text-text-primary"><strong>Email:</strong> <a href="mailto:yshhh173@gmail.com" className="text-primary-green hover: underline">yshhh173@gmail.com</a></p>
+              <p className="text-text-primary"><strong>Email:</strong> <a href="mailto:yshhh173@gmail.com" className="text-primary-green hover:underline">yshhh173@gmail.com</a></p>
               <p className="text-text-primary mt-2"><strong>GitHub:</strong> <a href="https://github.com/yshhh17/GeoDermal_Assistant" target="_blank" rel="noopener noreferrer" className="text-primary-blue hover:underline">yshhh17/GeoDermal_Assistant</a></p>
             </div>
           </section>
