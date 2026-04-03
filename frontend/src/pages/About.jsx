@@ -1,25 +1,23 @@
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
-import { FaHeart, FaLightbulb, FaUsers, FaGlobeAsia } from 'react-icons/fa';
+import { FaGlobeAsia } from 'react-icons/fa';
 
 function About() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-bg-secondary to-bg-accent">
       <Navbar />
       
-      <div className="max-w-5xl mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-text-primary mb-4">
+      <div className="max-w-5xl mx-auto px-4 py-10 sm:py-12">
+        <div className="text-center mb-10 sm:mb-14">
+          <h1 className="text-4xl sm:text-5xl font-bold text-text-primary mb-4">
             About GeoDermal Assistant
           </h1>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
             Your intelligent travel companion for personalized skin and hair care recommendations based on environmental conditions
           </p>
         </div>
 
-        {/* Mission Section */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-8">
+        <div className="bg-white rounded-3xl shadow-xl p-6 sm:p-8 md:p-12 mb-6 sm:mb-8">
           <div className="flex items-center mb-6">
             <h2 className="text-3xl font-bold text-text-primary">Our Mission</h2>
           </div>
@@ -31,8 +29,7 @@ function About() {
           </p>
         </div>
 
-        {/* What We Do */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-8">
+        <div className="bg-white rounded-3xl shadow-xl p-6 sm:p-8 md:p-12 mb-6 sm:mb-8">
           <div className="flex items-center mb-6">
             <h2 className="text-3xl font-bold text-text-primary">What We Do</h2>
           </div>
@@ -75,8 +72,7 @@ function About() {
           </div>
         </div>
 
-        {/* Our Values */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-8">
+        <div className="bg-white rounded-3xl shadow-xl p-6 sm:p-8 md:p-12 mb-6 sm:mb-8">
           <div className="flex items-center mb-6">
             <h2 className="text-3xl font-bold text-text-primary">Our Values</h2>
           </div>
@@ -95,7 +91,7 @@ function About() {
                 Privacy
               </h3>
               <p className="text-text-secondary">
-                Your data is never shared or sold.  We respect your privacy and protect your information.
+                Your data is never shared or sold. We respect your privacy and protect your information.
               </p>
             </div>
 
@@ -119,15 +115,14 @@ function About() {
           </div>
         </div>
 
-        {/* Coverage */}
-        <div className="bg-gradient-to-r from-primary-green to-primary-blue text-white rounded-3xl shadow-xl p-8 md:p-12 text-center">
+        <div className="bg-gradient-to-r from-primary-green to-primary-blue text-white rounded-3xl shadow-xl p-6 sm:p-8 md:p-12 text-center">
           <FaGlobeAsia className="text-6xl mx-auto mb-4" />
           <h2 className="text-3xl font-bold mb-4">Coverage Across India</h2>
           <p className="text-lg mb-6 max-w-2xl mx-auto">
             Currently serving 30+ major cities across India with comprehensive water quality data and real-time environmental monitoring.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            {['Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Pune', 'Ahmedabad', 'Jaipur', 'Kochi', 'Goa']. map(city => (
+            {['Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Pune', 'Ahmedabad', 'Jaipur', 'Kochi', 'Goa'].map((city) => (
               <span key={city} className="bg-white/20 px-4 py-2 rounded-full text-sm font-semibold">
                 {city}
               </span>

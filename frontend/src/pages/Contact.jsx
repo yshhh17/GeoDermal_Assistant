@@ -6,16 +6,16 @@ import { FaEnvelope, FaGithub, FaLinkedin, FaTwitter, FaPaperPlane, FaCheckCircl
 function Contact() {
   const [formData, setFormData] = useState({
     name: '',
-    email:  '',
+    email: '',
     subject: '',
-    message: ''
+    message: '',
   });
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target. name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -38,7 +38,7 @@ function Contact() {
       name: '',
       email: '',
       subject: '',
-      message: ''
+      message: '',
     });
   };
 
@@ -46,29 +46,27 @@ function Contact() {
     <div className="min-h-screen bg-gradient-to-br from-bg-secondary to-bg-accent">
       <Navbar />
       
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
+      <div className="max-w-6xl mx-auto px-4 py-10 sm:py-12">
+        <div className="text-center mb-10 sm:mb-12">
           <div className="inline-block p-4 bg-primary-green rounded-full mb-4">
             <FaEnvelope className="text-5xl text-white" />
           </div>
-          <h1 className="text-5xl font-bold text-text-primary mb-4">
+          <h1 className="text-4xl sm:text-5xl font-bold text-text-primary mb-4">
             Get In Touch
           </h1>
-          <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            Have questions, feedback, or suggestions? We'd love to hear from you! 
+          <p className="text-lg sm:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
+            Have questions, feedback, or suggestions? We'd love to hear from you!
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Contact Form */}
           <div className="bg-white rounded-3xl shadow-xl p-8">
             <h2 className="text-2xl font-bold text-text-primary mb-6">Send Us a Message</h2>
             
             {submitted && (
               <div className="bg-status-success/10 border-2 border-status-success rounded-xl p-4 mb-6 flex items-center">
                 <FaCheckCircle className="text-status-success text-2xl mr-3" />
-                <span className="text-status-success font-semibold">Message sent!  We'll get back to you soon. </span>
+                <span className="text-status-success font-semibold">Message sent! We'll get back to you soon.</span>
               </div>
             )}
 
@@ -95,9 +93,9 @@ function Contact() {
                 <input
                   type="email"
                   name="email"
-                  value={formData. email}
+                  value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-green focus: outline-none transition"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-green focus:outline-none transition"
                   placeholder="john@example.com"
                   required
                 />
@@ -143,9 +141,7 @@ function Contact() {
             </form>
           </div>
 
-          {/* Contact Info & Social */}
           <div className="space-y-6">
-            {/* Direct Contact */}
             <div className="bg-white rounded-3xl shadow-xl p-8">
               <h2 className="text-2xl font-bold text-text-primary mb-6">Direct Contact</h2>
               
@@ -180,7 +176,6 @@ function Contact() {
               </div>
             </div>
 
-            {/* Social Links */}
             <div className="bg-gradient-to-r from-primary-green to-primary-blue text-white rounded-3xl shadow-xl p-8">
               <h2 className="text-2xl font-bold mb-4">Connect With Us</h2>
               <p className="mb-6">Follow our journey and stay updated with the latest features</p>
@@ -213,7 +208,6 @@ function Contact() {
               </div>
             </div>
 
-            {/* FAQ Quick Links */}
             <div className="bg-white rounded-3xl shadow-xl p-8">
               <h2 className="text-2xl font-bold text-text-primary mb-4">Quick Links</h2>
               <div className="space-y-3">
@@ -234,7 +228,6 @@ function Contact() {
           </div>
         </div>
 
-        {/* Response Time */}
         <div className="mt-8 bg-white rounded-3xl shadow-xl p-6 text-center">
           <p className="text-text-secondary">
             <span className="font-semibold text-primary-green">💬 Average Response Time:</span> We typically respond within 24-48 hours
