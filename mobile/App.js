@@ -76,7 +76,11 @@ function MainTabs() {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Analyze" component={AnalyzeStackScreen} />
+      <Tab.Screen
+        name="Analyze"
+        component={AnalyzeStackScreen}
+        options={{ unmountOnBlur: true }}
+      />
       <Tab.Screen name="How it Works" component={HowItWorksScreen} />
       <Tab.Screen name="About" component={AboutScreen} />
     </Tab.Navigator>
