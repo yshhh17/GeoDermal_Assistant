@@ -1,32 +1,32 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AnimatedScreen from '../components/AnimatedScreen';
 import AppFooter from '../components/layout/AppFooter';
 import { colors } from '../theme/colors';
 
 export default function AboutScreen({ navigation }) {
+  const insets = useSafeAreaInsets();
+
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={styles.container} contentContainerStyle={[styles.content, { paddingTop: Math.max(insets.top, 10) + 10 }]}>
       <AnimatedScreen>
-        <Text style={styles.title}>About GeoDermal</Text>
-        <Text style={styles.subtitle}>
-          GeoDermal helps travelers adapt skin and hair care routines to destination climate and pollution patterns.
-        </Text>
+        <Text style={styles.title}>About</Text>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Data Signals</Text>
-          <Text style={styles.cardText}>- Temperature, humidity, UV index</Text>
-          <Text style={styles.cardText}>- Air quality including AQI and PM2.5</Text>
-          <Text style={styles.cardText}>- Water-quality context where available</Text>
+          <Text style={styles.sectionHeading}>What is GeoDermal?</Text>
+          <Text style={styles.bodyText}>GeoDermal helps travelers adapt skin and hair care routines based on destination conditions like weather, UV, air quality, and water context.</Text>
+
+          <Text style={styles.sectionHeading}>How it helps</Text>
+          <Text style={styles.bodyText}>You provide your route and profile, and the app returns risk scores with practical recommendations that are easy to apply during your trip.</Text>
+
+          <Text style={styles.sectionHeading}>Our focus</Text>
+          <Text style={styles.bodyText}>We focus on clear insights, useful guidance, and privacy-first handling of your analysis inputs.</Text>
         </View>
 
         <View style={styles.row}>
-          <Pressable style={styles.linkBtn} onPress={() => navigation.navigate('Contact')}>
-            <Text style={styles.linkText}>Contact</Text>
-          </Pressable>
-          <Pressable style={styles.linkBtn} onPress={() => navigation.navigate('Privacy')}>
-            <Text style={styles.linkText}>Privacy</Text>
-          </Pressable>
+          <Pressable style={styles.linkBtn} onPress={() => navigation.navigate('Contact')}><Text style={styles.linkText}>Contact</Text></Pressable>
+          <Pressable style={styles.linkBtn} onPress={() => navigation.navigate('Privacy')}><Text style={styles.linkText}>Privacy</Text></Pressable>
         </View>
         <AppFooter />
       </AnimatedScreen>
@@ -36,37 +36,34 @@ export default function AboutScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bgMain },
-  content: { padding: 16, paddingBottom: 32 },
+  content: { paddingHorizontal: 16, paddingBottom: 32 },
   title: {
     color: colors.textPrimary,
-    fontSize: 30,
+    fontSize: 46,
     fontWeight: '800',
-  },
-  subtitle: {
-    color: colors.textSecondary,
-    marginTop: 8,
-    lineHeight: 21,
+    marginBottom: 12,
   },
   card: {
-    marginTop: 14,
+    marginBottom: 10,
     backgroundColor: colors.white,
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: 14,
-    padding: 14,
+    padding: 16,
   },
-  cardTitle: {
+  sectionHeading: {
     color: colors.textPrimary,
     fontWeight: '800',
-    fontSize: 17,
-    marginBottom: 8,
+    fontSize: 18,
+    marginTop: 8,
+    marginBottom: 6,
   },
-  cardText: {
+  bodyText: {
     color: colors.textSecondary,
-    marginBottom: 4,
+    lineHeight: 20,
   },
   row: {
-    marginTop: 14,
+    marginTop: 6,
     flexDirection: 'row',
     gap: 10,
   },
