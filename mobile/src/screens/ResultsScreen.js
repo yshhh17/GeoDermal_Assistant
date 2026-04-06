@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
+import { CommonActions } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import AnimatedScreen from '../components/AnimatedScreen';
@@ -49,13 +50,22 @@ export default function ResultsScreen({ route, navigation }) {
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
 
+  const resetToAnalyzeStart = () => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'AnalyzeFlow' }],
+      }),
+    );
+  };
+
   const riskCategories = useMemo(() => {
     return analysisData?.analysisType === 'hair' ? HAIR_RISKS : SKIN_RISKS;
   }, [analysisData?.analysisType]);
 
   useEffect(() => {
     if (!analysisData) {
-      navigation.goBack();
+      resetToAnalyzeStart();
       return;
     }
 
@@ -74,6 +84,20 @@ export default function ResultsScreen({ route, navigation }) {
 
     loadResults();
   }, [analysisData, navigation]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (event) => {
+      const actionType = event.data.action?.type;
+      if (!['GO_BACK', 'POP', 'POP_TO_TOP'].includes(actionType)) {
+        return;
+      }
+
+      event.preventDefault();
+      resetToAnalyzeStart();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   if (loading) {
     return (
