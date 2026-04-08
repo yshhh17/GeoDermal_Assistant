@@ -8,13 +8,15 @@ import AnalysisType from '../components/analyze/AnalysisType';
 import SkinTypeQuiz from '../components/analyze/SkinTypeQuiz';
 import HairTypeQuiz from '../components/analyze/HairTypeQuiz';
 import TravelDuration from '../components/analyze/TravelDuration';
+import { skinHairFacts } from '../utils/educationalContent';
+
 function Analyze() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [analysisData, setAnalysisData] = useState({
-    cities:  null,
-    analysisType:  null,
-    typeAnswers:  null,
+    cities: null,
+    analysisType: null,
+    typeAnswers: null,
     duration: null
   });
 
@@ -41,12 +43,43 @@ function Analyze() {
     navigate('/results');
   };
 
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(prev => prev - 1);
+    }
+  };
+
+  const renderStep = () => {
+    if (step === 1) {
+      return <CitySearch onCitiesSelected={handleCitiesSelected} />;
+    }
+
+    if (step === 2) {
+      return <AnalysisType onTypeSelected={handleTypeSelected} />;
+    }
+
+    if (step === 3 && analysisData.analysisType === 'skin') {
+      return <SkinTypeQuiz onComplete={handleTypeQuizComplete} />;
+    }
+
+    if (step === 3 && analysisData.analysisType === 'hair') {
+      return <HairTypeQuiz onComplete={handleTypeQuizComplete} />;
+    }
+
+    return (
+      <TravelDuration
+        onComplete={handleDurationComplete}
+        analysisType={analysisData.analysisType}
+      />
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-bg-secondary to-bg-accent relative overflow-hidden">
       {/* Background SVG Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-5">
         {/* DNA Helix - Top Right */}
-        <svg className="absolute top-10 right-10 w-32 h-32 md:w-48 md:h-48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <svg className="absolute top-10 right-10 w-32 h-32 md:w-48 md:h-48 animate-float-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path d="M4 4 Q12 8 20 4 M4 8 Q12 12 20 8 M4 12 Q12 16 20 12 M4 16 Q12 20 20 16 M4 20 Q12 24 20 20" strokeWidth="1.5" strokeLinecap="round"/>
           <circle cx="4" cy="4" r="1.5" fill="currentColor"/>
           <circle cx="20" cy="4" r="1.5" fill="currentColor"/>
@@ -57,12 +90,12 @@ function Analyze() {
         </svg>
 
         {/* Droplet - Bottom Left */}
-        <svg className="absolute bottom-20 left-10 w-24 h-24 md:w-36 md:h-36" viewBox="0 0 24 24" fill="currentColor">
+        <svg className="absolute bottom-20 left-10 w-24 h-24 md:w-36 md:h-36 animate-float-slow" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
         </svg>
 
         {/* Sun/UV - Top Left */}
-        <svg className="absolute top-32 left-20 w-28 h-28 md:w-40 md:h-40" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <svg className="absolute top-32 left-20 w-28 h-28 md:w-40 md:h-40 animate-float-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <circle cx="12" cy="12" r="4" strokeWidth="1.5"/>
           <line x1="12" y1="1" x2="12" y2="3" strokeWidth="1.5" strokeLinecap="round"/>
           <line x1="12" y1="21" x2="12" y2="23" strokeWidth="1.5" strokeLinecap="round"/>
@@ -75,7 +108,7 @@ function Analyze() {
         </svg>
 
         {/* Molecule - Bottom Right */}
-        <svg className="absolute bottom-32 right-20 w-28 h-28 md:w-40 md:h-40" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <svg className="absolute bottom-32 right-20 w-28 h-28 md:w-40 md:h-40 animate-float-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <circle cx="12" cy="12" r="2" strokeWidth="1.5" fill="currentColor"/>
           <circle cx="6" cy="6" r="2" strokeWidth="1.5" fill="currentColor"/>
           <circle cx="18" cy="6" r="2" strokeWidth="1.5" fill="currentColor"/>
@@ -88,34 +121,43 @@ function Analyze() {
         </svg>
 
         {/* Leaf/Natural - Center Right */}
-        <svg className="absolute top-1/2 right-32 w-20 h-20 md:w-32 md:h-32" viewBox="0 0 24 24" fill="currentColor">
+        <svg className="absolute top-1/2 right-32 w-20 h-20 md:w-32 md:h-32 animate-float-slow" viewBox="0 0 24 24" fill="currentColor">
           <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.67C7.89 17.03 10.15 12.9 17 11V8zm0-2l4 4-4 4V8z"/>
         </svg>
       </div>
 
       <Navbar />
       
-      <div className="max-w-5xl min-h-[calc(100vh-200px)] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-8 md:py-12">
+      <div className="max-w-5xl min-h-[calc(100vh-200px)] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-8 md:py-12 relative z-10">
         {step > 1 && (
-          <div className="mb-6 sm:mb-8">
+          <div className="mb-6 sm:mb-8 animate-fade-in-up">
             <ProgressBar currentStep={step - 1} totalSteps={totalSteps} />
+            <button
+              type="button"
+              onClick={handleBack}
+              className="mt-3 text-sm font-medium text-text-secondary hover:text-text-primary transition"
+            >
+              ← Back
+            </button>
           </div>
         )}
         
-        {step === 1 && <CitySearch onCitiesSelected={handleCitiesSelected} />}
-        {step === 2 && <AnalysisType onTypeSelected={handleTypeSelected} />}
-        {step === 3 && analysisData.analysisType === 'skin' && (
-          <SkinTypeQuiz onComplete={handleTypeQuizComplete} />
-        )}
-        {step === 3 && analysisData.analysisType === 'hair' && (
-          <HairTypeQuiz onComplete={handleTypeQuizComplete} />
-        )}
-        {step === 4 && (
-          <TravelDuration 
-            onComplete={handleDurationComplete} 
-            analysisType={analysisData.analysisType}
-          />
-        )}
+        <div key={step} className="animate-fade-in-up">
+          {renderStep()}
+        </div>
+
+        <section className="mt-12 mb-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 sm:p-8 animate-fade-in-up">
+          <h3 className="text-2xl font-bold text-text-primary mb-2">Quick Skin & Hair Facts</h3>
+          <p className="text-text-secondary mb-6">Travel conditions can shift your routine faster than expected.</p>
+          <div className="grid gap-4 md:grid-cols-3">
+            {skinHairFacts.map((fact) => (
+              <article key={fact.title} className="rounded-xl border border-bg-secondary bg-white p-4">
+                <h4 className="font-semibold text-text-primary mb-2">{fact.title}</h4>
+                <p className="text-sm text-text-secondary">{fact.description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
       </div>
 
       <Footer />
