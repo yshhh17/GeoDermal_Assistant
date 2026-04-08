@@ -23,7 +23,7 @@ function TravelDuration({ onComplete, analysisType }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
+    <div className="bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto animate-fade-in-up">
       <div className="text-center mb-8">
         <FaCalendarAlt className="text-5xl text-primary-green mx-auto mb-4" />
         <h2 className="text-3xl font-bold text-text-primary mb-2">
@@ -44,9 +44,11 @@ function TravelDuration({ onComplete, analysisType }) {
                 setDuration(dur.value);
                 if (dur.value !== 'custom') setCustomDays('');
               }}
-              className={`p-6 rounded-lg border-2 transition transform hover:-translate-y-1 ${
+              className={`p-6 rounded-lg border-2 transition-all duration-200 transform hover:-translate-y-1 ${
                 duration === dur.value
-                  ? `border-${analysisType === 'skin' ? 'primary-green' : 'primary-blue'} bg-bg-secondary`
+                  ? analysisType === 'skin'
+                    ? 'border-primary-green bg-bg-secondary'
+                    : 'border-primary-blue bg-bg-accent'
                   : 'border-gray-200 hover:border-primary-green'
               }`}
             >
@@ -78,9 +80,9 @@ function TravelDuration({ onComplete, analysisType }) {
         {/* Submit */}
         <button
           type="submit"
-          disabled={!duration || (duration === 'custom' && ! customDays)}
+          disabled={!duration || (duration === 'custom' && !customDays)}
           className={`w-full text-white py-4 rounded-lg font-semibold text-lg hover:shadow-lg transform hover:-translate-y-1 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
-            analysisType === 'skin' ?  'bg-primary-green' : 'bg-primary-blue'
+            analysisType === 'skin' ? 'bg-primary-green' : 'bg-primary-blue'
           }`}
         >
           Get My Results →
