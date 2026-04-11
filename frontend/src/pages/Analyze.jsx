@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -8,7 +8,8 @@ import AnalysisType from '../components/analyze/AnalysisType';
 import SkinTypeQuiz from '../components/analyze/SkinTypeQuiz';
 import HairTypeQuiz from '../components/analyze/HairTypeQuiz';
 import TravelDuration from '../components/analyze/TravelDuration';
-import { skinHairFacts } from '../utils/educationalContent';
+import FactSpotlight from '../components/shared/FactSpotlight';
+import { getFactHighlights, getRandomFact } from '../utils/educationalContent';
 
 function Analyze() {
   const navigate = useNavigate();
@@ -19,8 +20,25 @@ function Analyze() {
     typeAnswers: null,
     duration: null
   });
+  const [currentFact, setCurrentFact] = useState(() => getRandomFact());
 
   const totalSteps = 4;
+
+  const factHighlights = useMemo(() => {
+    return getFactHighlights(analysisData.analysisType, currentFact?.title, 2);
+  }, [analysisData.analysisType, currentFact?.title]);
+
+  useEffect(() => {
+    setCurrentFact((prev) => getRandomFact(analysisData.analysisType, prev?.title));
+  }, [analysisData.analysisType, step]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentFact((prev) => getRandomFact(analysisData.analysisType, prev?.title));
+    }, 7000);
+
+    return () => clearInterval(intervalId);
+  }, [analysisData.analysisType]);
 
   const handleCitiesSelected = (cities) => {
     setAnalysisData(prev => ({ ...prev, cities }));
@@ -146,16 +164,18 @@ function Analyze() {
           {renderStep()}
         </div>
 
-        <section className="mt-12 mb-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 sm:p-8 animate-fade-in-up">
-          <h3 className="text-2xl font-bold text-text-primary mb-2">Quick Skin & Hair Facts</h3>
-          <p className="text-text-secondary mb-6">Travel conditions can shift your routine faster than expected.</p>
-          <div className="grid gap-4 md:grid-cols-3">
-            {skinHairFacts.map((fact) => (
-              <article key={fact.title} className="rounded-xl border border-bg-secondary bg-white p-4">
-                <h4 className="font-semibold text-text-primary mb-2">{fact.title}</h4>
-                <p className="text-sm text-text-secondary">{fact.description}</p>
-              </article>
-            ))}
+        <section className="mt-10 mb-8 animate-fade-in-up">
+          <div className="rounded-3xl border border-white/60 bg-white/80 backdrop-blur-md shadow-xl p-5 sm:p-7">
+            <FactSpotlight fact={currentFact} analysisType={analysisData.analysisType} />
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {factHighlights.map((fact) => (
+                <article key={fact.title} className="rounded-xl border border-bg-secondary bg-white/90 p-4">
+                  <h4 className="font-semibold text-text-primary mb-1">{fact.title}</h4>
+                  <p className="text-sm text-text-secondary leading-relaxed">{fact.description}</p>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
       </div>
