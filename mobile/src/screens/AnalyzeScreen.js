@@ -1,13 +1,15 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, View, Pressable } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AnimatedScreen from '../components/AnimatedScreen';
 import StepIndicator from '../components/StepIndicator';
 import OptionCard from '../components/OptionCard';
 import PrimaryButton from '../components/PrimaryButton';
+import FactCard from '../components/FactCard';
 import AppFooter from '../components/layout/AppFooter';
 import { colors } from '../theme/colors';
 import { INDIAN_CITIES } from '../constants/cities';
+import { getRandomAnalysisFact } from '../constants/analysisFacts';
 import {
   ANALYSIS_TYPES,
   DURATION_OPTIONS,
@@ -32,6 +34,7 @@ export default function AnalyzeScreen({ navigation }) {
   const [hairAnswers, setHairAnswers] = useState({ hairType: '', texture: '', concerns: [] });
   const [duration, setDuration] = useState('');
   const [customDays, setCustomDays] = useState('');
+  const [analysisFact, setAnalysisFact] = useState(() => getRandomAnalysisFact());
 
   const totalSteps = 4;
 
@@ -46,6 +49,10 @@ export default function AnalyzeScreen({ navigation }) {
   }, [analysisData.analysisType, hairAnswers.hairType, hairAnswers.texture, skinAnswers.sensitivity, skinAnswers.skinType]);
 
   const canFinish = duration && (duration !== 'custom' || customDays);
+
+  useEffect(() => {
+    setAnalysisFact((prev) => getRandomAnalysisFact(analysisData.analysisType, prev));
+  }, [analysisData.analysisType, step]);
 
   const toggleConcern = (concern, mode) => {
     if (mode === 'skin') {
@@ -299,6 +306,13 @@ export default function AnalyzeScreen({ navigation }) {
           {step === 3 && analysisData.analysisType === 'skin' && renderSkinQuiz()}
           {step === 3 && analysisData.analysisType === 'hair' && renderHairQuiz()}
           {step === 4 && renderDurationStep()}
+          <View style={styles.factWrap}>
+            <FactCard
+              title="Skin & Hair Fact"
+              fact={analysisFact}
+              variant={analysisData.analysisType === 'hair' ? 'blue' : 'green'}
+            />
+          </View>
         </View>
         <AppFooter />
       </AnimatedScreen>
@@ -389,5 +403,8 @@ const styles = StyleSheet.create({
   },
   buttonTop: {
     marginTop: 8,
+  },
+  factWrap: {
+    marginTop: 12,
   },
 });
