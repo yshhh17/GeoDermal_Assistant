@@ -5,10 +5,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import AnimatedScreen from '../components/AnimatedScreen';
 import MetricCard from '../components/MetricCard';
+import FactCard from '../components/FactCard';
 import AppFooter from '../components/layout/AppFooter';
 import { analyzeDestination } from '../services/api';
 import { colors } from '../theme/colors';
 import { getRiskMeta } from '../utils/mappers';
+import { getRandomAnalysisFact } from '../constants/analysisFacts';
 
 const SKIN_RISKS = [
   { key: 'dryness', label: 'Dryness Risk' },
@@ -49,6 +51,7 @@ export default function ResultsScreen({ route, navigation }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
+  const [loadingFact, setLoadingFact] = useState(() => getRandomAnalysisFact(analysisData?.analysisType));
 
   const resetToAnalyzeStart = () => {
     navigation.dispatch(
@@ -86,6 +89,20 @@ export default function ResultsScreen({ route, navigation }) {
   }, [analysisData, navigation]);
 
   useEffect(() => {
+    setLoadingFact((prev) => getRandomAnalysisFact(analysisData?.analysisType, prev));
+  }, [analysisData?.analysisType]);
+
+  useEffect(() => {
+    if (!loading) return undefined;
+
+    const intervalId = setInterval(() => {
+      setLoadingFact((prev) => getRandomAnalysisFact(analysisData?.analysisType, prev));
+    }, 3200);
+
+    return () => clearInterval(intervalId);
+  }, [analysisData?.analysisType, loading]);
+
+  useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (event) => {
       const actionType = event.data.action?.type;
       if (!['GO_BACK', 'POP', 'POP_TO_TOP'].includes(actionType)) {
@@ -107,6 +124,13 @@ export default function ResultsScreen({ route, navigation }) {
             <ActivityIndicator color={colors.primaryGreen} size="large" />
             <Text style={styles.loadingTitle}>Analyzing destination...</Text>
             <Text style={styles.loadingSub}>Fetching weather, AQI, water quality and building recommendations.</Text>
+            <View style={styles.loadingFactWrap}>
+              <FactCard
+                title="While you wait"
+                fact={loadingFact}
+                variant={analysisData?.analysisType === 'hair' ? 'blue' : 'green'}
+              />
+            </View>
           </View>
           <AppFooter />
         </AnimatedScreen>
@@ -228,6 +252,10 @@ const styles = StyleSheet.create({
     marginTop: 6,
     color: colors.textSecondary,
     textAlign: 'center',
+  },
+  loadingFactWrap: {
+    marginTop: 12,
+    width: '100%',
   },
   errorTitle: {
     marginTop: 10,
