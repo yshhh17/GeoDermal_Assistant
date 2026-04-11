@@ -8,6 +8,8 @@ import RiskScores from '../components/results/RiskScores';
 import Recommendations from '../components/results/Recommendations';
 import { FaSpinner, FaArrowLeft, FaExclamationTriangle } from 'react-icons/fa';
 import { analyzeDestination } from '../services/api';
+import FactSpotlight from '../components/shared/FactSpotlight';
+import { getRandomFact } from '../utils/educationalContent';
 
 function Results() {
   const navigate = useNavigate();
@@ -15,6 +17,7 @@ function Results() {
   const [error, setError] = useState(null);
   const [analysisData, setAnalysisData] = useState(null);
   const [results, setResults] = useState(null);
+  const [loadingFact, setLoadingFact] = useState(() => getRandomFact());
 
   useEffect(() => {
     // Get analysis data from localStorage
@@ -31,6 +34,20 @@ function Results() {
     // Call backend API
     fetchAnalysis(data);
   }, [navigate]);
+
+  useEffect(() => {
+    setLoadingFact((prev) => getRandomFact(analysisData?.analysisType, prev?.title));
+  }, [analysisData?.analysisType]);
+
+  useEffect(() => {
+    if (!loading) return undefined;
+
+    const intervalId = setInterval(() => {
+      setLoadingFact((prev) => getRandomFact(analysisData?.analysisType, prev?.title));
+    }, 3200);
+
+    return () => clearInterval(intervalId);
+  }, [analysisData?.analysisType, loading]);
 
   const fetchAnalysis = async (data) => {
     try {
@@ -53,14 +70,15 @@ function Results() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-bg-secondary to-bg-accent flex items-center justify-center">
-        <div className="text-center">
+        <div className="text-center w-full max-w-2xl px-4">
           <FaSpinner className="text-6xl text-primary-green animate-spin mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-text-primary mb-2">
             Analyzing Your Destination... 
           </h2>
-          <p className="text-text-secondary">
+          <p className="text-text-secondary mb-5">
             Gathering environmental data and generating personalized recommendations
           </p>
+          <FactSpotlight fact={loadingFact} analysisType={analysisData?.analysisType} compact />
         </div>
       </div>
     );
@@ -120,6 +138,14 @@ function Results() {
         <h1 className="text-4xl font-bold text-text-primary mb-8 text-center">
           Your {analysisData.analysisType === 'skin' ? 'Skin' : 'Hair'} Analysis Results
         </h1>
+
+        <div className="mb-8">
+          <FactSpotlight
+            fact={loadingFact}
+            analysisType={analysisData.analysisType}
+            compact
+          />
+        </div>
 
         {/* Comparison Card */}
         <div className="mb-8">
