@@ -1,224 +1,209 @@
-# GeoDermal Assistant
+# GeoDermal
 
-AI-powered environmental analysis for travelers.  Get personalized skin and hair care recommendations based on your destination's climate, air quality, and water conditions.
+AI-powered environmental risk analysis for travelers, with skin and hair care guidance based on destination weather, air quality, and water quality.
 
-**Live App:** https://geo-dermal-assistant.vercel.app/
+Live web app: https://geo-dermal-assistant.vercel.app/
 
-## Overview
+## What it does
 
-GeoDermal Assistant analyzes environmental factors at your travel destination and provides: 
-- Risk scores (1-10 scale) for skin/hair conditions
-- Personalized product recommendations
-- AI-powered analysis using real-time environmental data
-- Tailored advice based on trip duration and personal care type
+- Collects destination environmental signals (temperature, humidity, UV, AQI/PM2.5, water quality)
+- Scores potential skin/hair risks using an LLM-backed analysis flow
+- Returns tailored recommendations based on user profile and trip duration
+- Persists reports for usage statistics and trend analysis
 
-## Tech Stack
+## Monorepo apps
 
-### Frontend
-- React 18 + Vite
-- React Router for navigation
-- Tailwind CSS for styling
-- Axios for API calls
-- Deployed on Vercel
+- `backend/` — FastAPI + SQLAlchemy + Alembic + PostgreSQL
+- `frontend/` — React + Vite web client
+- `mobile/` — React Native (Expo) mobile client
 
-### Backend
-- FastAPI + Python 3.9+
-- PostgreSQL with SQLAlchemy ORM
-- Groq LLM for AI analysis
-- Rate limiting with SlowAPI
-- Deployed on Render
+## Tech stack
 
-### External APIs
-- Open-Meteo (weather & UV data)
-- OpenAQ (air quality data)
-- Custom water quality dataset for 30+ Indian cities
+- Backend: FastAPI, SQLAlchemy, Alembic, PostgreSQL, SlowAPI
+- Frontend: React, Vite, Tailwind CSS, Axios
+- Mobile: Expo, React Native, Axios
+- External data: Open-Meteo APIs + local water-quality dataset
 
-## Quick Start
+## Quick start (Docker)
 
-### Using Docker (Recommended)
+### 1) Create root `.env`
 
-```bash
-# Clone repository
-git clone https://github.com/yshhh17/GeoDermal_Assistant.git
-cd GeoDermal_Assistant
+In the project root, create `.env` (used by `docker-compose.yml`):
 
-# Create .env file
-cp .env.example .env
-# Edit .env with your GROQ_API_KEY and database credentials
-
-# Start all services
-docker-compose up --build
-
-# Run migrations
-docker-compose exec backend alembic upgrade head
-
+```env
+DB_PASSWORD=change_me
+GROQ_API_KEY=your_groq_api_key
+GROQ_MODEL=openai/gpt-oss-20b
+SOURCE_VERSION=1.0.0
+OPEN_METEO_BASE=https://api.open-meteo.com/v1
+OPENAQ_BASE=https://air-quality-api.open-meteo.com/v1
+GEOCODE_BASE_URL=https://nominatim.openstreetmap.org
+HTTP_TIMEOUT=10
+APP_NAME=GeoDermal API
 ```
 
-### Access:
+### 2) Create backend `.env`
 
-    Frontend: http://localhost:3000
-    Backend API: http://localhost:8000
-    API Docs: http://localhost:8000/docs
+```bash
+cp backend/.env.example backend/.env
+```
 
-## Manual Setup
+Then ensure `backend/.env` includes:
+
+```env
+FRONTEND_URL=http://localhost:3000
+DATABASE_URL=postgresql+psycopg2://geodermal:<DB_PASSWORD>@db:5432/geodermal
+GROQ_API_KEY=your_groq_api_key
+SOURCE_VERSION=1.0.0
+```
+
+### 3) Start services
+
+```bash
+docker compose up --build
+```
+
+### 4) Run migrations
+
+```bash
+docker compose exec backend alembic upgrade head
+```
+
+### Access
+
+- Web: http://localhost:3000
+- API: http://localhost:8000
+- API docs: http://localhost:8000/docs
+
+## Manual local setup
 
 ### Backend
-- cd backend
-- python -m venv .venv
-- source .venv/bin/activate  # Windows: .venv\Scripts\activate
-- pip install -r requirements.txt
 
-### Configure .env file
-- cp .env.example.env
-### Add your GROQ_API_KEY and DATABASE_URL
-
-### Run migrations
-- alembic upgrade head
-
-### Start server
-- uvicorn app.main:app --reload --port 8000
-
-### Frontend
-- cd frontend
-- npm install
-
-### Configure environment
-- echo "VITE_API_URL=http://localhost:8000" > .env
-
-### Start dev server
-- npm run dev
-
-## API Usage
-- Analyze Destination
-
-- POST /api/analyze
 ```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+```
 
-curl -X POST "https://your-api-url.com/api/analyze" \
+Update `.env` with at least:
+
+```env
+DATABASE_URL=postgresql+psycopg2://<user>:<password>@localhost:5432/geodermal
+GROQ_API_KEY=your_groq_api_key
+SOURCE_VERSION=1.0.0
+FRONTEND_URL=http://localhost:5173
+```
+
+Run migrations and start API:
+
+```bash
+alembic upgrade head
+uvicorn app.main:app --reload --port 8000
+```
+
+### Frontend (web)
+
+```bash
+cd frontend
+npm install
+echo "VITE_API_URL=http://localhost:8000" > .env
+npm run dev
+```
+
+### Mobile (Expo)
+
+```bash
+cd mobile
+npm install
+cp .env.example .env
+```
+
+Set `EXPO_PUBLIC_API_URL` in `mobile/.env`, then start:
+
+```bash
+npm run start
+```
+
+For physical devices, use your machine LAN IP (not `localhost`).
+
+## API
+
+### `POST /api/analyze`
+
+Request body:
+
+```json
+{
+  "destination": "Mumbai",
+  "home_city": "Delhi",
+  "duration_category": "2-7d",
+  "month_or_season": "December",
+  "concern": "skin",
+  "skin_type": "dry"
+}
+```
+
+Allowed enum fields:
+
+- `duration_category`: `<48h`, `2-7d`, `1-4w`, `relocation`
+- `concern`: `skin` or `hair`
+- `skin_type` (optional): `dry`, `oily`, `normal`, `combination`, `sensitive`
+- `hair_type` (optional): `straight`, `wavy`, `curly`, `coily`
+
+Example:
+
+```bash
+curl -X POST "http://localhost:8000/api/analyze" \
   -H "Content-Type: application/json" \
   -d '{
     "destination": "Mumbai",
-    "home_city":  "Delhi",
+    "home_city": "Delhi",
     "duration_category": "2-7d",
     "month_or_season": "December",
     "concern": "skin",
     "skin_type": "dry"
   }'
-
 ```
-### Parameters:
-  - destination (required): City to analyze
-  - home_city (required): Your current city
-  - duration_category (required): "<48h", "2-7d", "1-4w", or "relocation"
-  - month_or_season (required): Travel time (e.g., "December", "Summer")
-  - concern (required): "skin" or "hair"
-  - skin_type (optional): "dry", "oily", "normal", "combination", "sensitive"
-  - hair_type (optional): "straight", "wavy", "curly", "coily"
 
+### Other endpoints
 
+- `GET /api/health` — service health and dependency status
+- `GET /api/stats` — aggregate usage statistics
+- `GET /docs` — Swagger UI
 
-### Response includes:
-   - Environmental data (temperature, humidity, UV, AQI, PM2.5)
-   - Risk scores for specific conditions
-   - Personalized recommendations
-   - Confidence level
+### Rate limits
 
-### Other Endpoints
-  - GET /api/health - Check API status
-  - GET /api/stats - View usage statistics
-  - GET /docs - Interactive API documentatio
+- `POST /api/analyze`: `10/hour` per IP
+- `GET /api/stats`: `30/hour` per IP
 
-## Rate Limits
-  - Analysis endpoint: 10 requests/hour per IP
-  - Statistics endpoint: 30 requests/hour per IP
+## Project structure
 
-### Rate limit headers included in responses:
-
-    X-RateLimit-Limit
-    X-RateLimit-Remaining
-    X-RateLimit-Reset
-
-## Project Structure
-```GeoDermal_Assistant/
+```text
+GeoDermal/
 ├── backend/
-│   ├── alembic/              # Database migrations
+│   ├── alembic/
 │   ├── app/
-│   │   ├── api/endpoints/    # Route handlers
-│   │   ├── core/             # Rate limiting, config
-│   │   ├── db/               # Database setup
-│   │   ├── models/           # SQLAlchemy models
-│   │   ├── schemas/          # Pydantic schemas
-│   │   ├── services/         # Business logic & API clients
-│   │   └── main.py           # FastAPI app
-│   ├── requirements. txt
-│   └── . env.example
+│   │   ├── api/endpoints/
+│   │   ├── core/
+│   │   ├── db/
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   └── services/
+│   └── requirements.txt
 ├── frontend/
 │   ├── src/
-│   │   ├── components/       # React components
-│   │   ├── pages/            # Page components
-│   │   ├── services/         # API service
-│   │   └── App.jsx
-│   ├── package.json
-│   └── vite.config.js
-├── data/                     # Water quality dataset
+│   └── package.json
+├── mobile/
+│   ├── src/
+│   └── package.json
+├── data/
 ├── docker-compose.yml
-└── README. md
+└── README.md
 ```
-
-## Key Features
-  - Multi-step analysis flow
-  - Real-time environmental data display
-  - Interactive risk score visualization
-  - Responsive design (mobile, tablet, desktop)
-  - Client-side routing with React Router
-  - Error handling and loading states
-
-## API Integration
-- The app communicates with the backend via src/services/api.js:
-```
-import api from './services/api';
-
-// Analyze destination
-const response = await api.post('/api/analyze', {
-  destination: 'Mumbai',
-  home_city: 'Delhi',
-  duration_category: '2-7d',
-  month_or_season: 'December',
-  concern: 'skin',
-  skin_type: 'dry'
-});
-```
-
-## Deployment
-### Vercel (Automatic)
- - Connect GitHub repository to Vercel
- - Set environment variable: VITE_API_URL
- - Deploy automatically on push to main
-
-## Pages
-
-  - / - Landing page with hero and features
-  - /analyze - Multi-step analysis flow
-  - /results - Display analysis results
-  -  /about - About the project
-   - /how-it-works - Detailed explanation
-   - /privacy - Privacy policy
-   - /contact - Contact form
-
-## Contributing
-
-  -Fork the repository
-   - Create a feature branch
-   - Make your changes
-   - Test thoroughly
-   - Submit a pull request
 
 ## License
 
-- MIT License
-- Contact
-
-### Author: Yash Tiwari
-- Email: yshhh173@gmail.com
-- GitHub: @yshhh17
+MIT
 
